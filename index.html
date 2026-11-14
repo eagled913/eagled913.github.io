@@ -285,6 +285,10 @@
       if (msg) msg.textContent = 'Sign in to save favorites.';
       return;
     }
+    if (!favSet[k] && appliedSet[k]) {
+      window.alert('That job is in your Applied list, and applied jobs stay in Applied only. Undo Apply on it first if you want to favorite it.');
+      return;
+    }
     if (favSet[k]) {
       sb.from('job_favorites').delete().eq('job_key', k).then(function (res) {
         if (res.error) { window.alert('Error: ' + res.error.message); return; }
@@ -496,6 +500,14 @@
         appliedSet[k] = true;
         appliedOrder.push(k);
         applyApplied();
+        if (favSet[k]) {
+          sb.from('job_favorites').delete().eq('job_key', k).then(function (res2) {
+            if (res2.error) { window.alert('Error: ' + res2.error.message); return; }
+            delete favSet[k];
+            favOrder = favOrder.filter(function (x) { return x !== k; });
+            applyFavs();
+          });
+        }
       });
     }
   });
