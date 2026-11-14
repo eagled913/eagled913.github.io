@@ -151,6 +151,14 @@
 
   function renderHistory(job) {
     var k = job.getAttribute('data-jobkey');
+    if (!k) return;
+    var escK = (window.CSS && CSS.escape) ? CSS.escape(k) : k;
+    document.querySelectorAll('.job[data-jobkey="' + escK + '"]').forEach(function (j) {
+      renderHistoryInto(j, k);
+    });
+  }
+
+  function renderHistoryInto(job, k) {
     var hist = job.querySelector('.note-history');
     if (!hist) return;
     var entries = entriesByKey[k] || [];
@@ -237,14 +245,15 @@
       var orig = document.querySelector('.job[data-jobkey="' + esc + '"]');
       if (!orig || list.contains(orig)) return;
       var clone = orig.cloneNode(true);
-      var notes = clone.querySelector('.notes');
-      if (notes) notes.remove();
       clone.classList.remove('job-archived');
       clone.classList.remove('job-applied-hidden');
       clone.removeAttribute('data-archived');
       clone.removeAttribute('data-applied');
       clone.hidden = false;
+      var cbox = clone.querySelector('.notes');
+      if (cbox && signedIn) cbox.hidden = false;
       list.appendChild(clone);
+      if (cbox && signedIn) renderHistory(clone);
       n++;
     });
     if (count) count.textContent = '(' + n + ')';
@@ -338,16 +347,17 @@
       var orig = document.querySelector('.job[data-jobkey="' + esc + '"]');
       if (!orig || list.contains(orig)) return;
       var clone = orig.cloneNode(true);
-      var notes = clone.querySelector('.notes');
-      if (notes) notes.remove();
       clone.classList.remove('job-archived');
       clone.classList.remove('job-applied-hidden');
       clone.removeAttribute('data-archived');
       clone.removeAttribute('data-applied');
       clone.hidden = false;
+      var cbox = clone.querySelector('.notes');
+      if (cbox && signedIn) cbox.hidden = false;
       var ab = clone.querySelector('.arch-btn');
       if (ab) ab.textContent = 'Unarchive';
       list.appendChild(clone);
+      if (cbox && signedIn) renderHistory(clone);
       n++;
     });
     if (count) count.textContent = '(' + n + ')';
@@ -437,16 +447,17 @@
       var orig = document.querySelector('.job[data-jobkey="' + esc + '"]');
       if (!orig || list.contains(orig)) return;
       var clone = orig.cloneNode(true);
-      var notes = clone.querySelector('.notes');
-      if (notes) notes.remove();
       clone.classList.remove('job-archived');
       clone.classList.remove('job-applied-hidden');
       clone.removeAttribute('data-archived');
       clone.removeAttribute('data-applied');
       clone.hidden = false;
+      var cbox = clone.querySelector('.notes');
+      if (cbox && signedIn) cbox.hidden = false;
       var ab = clone.querySelector('.applied-btn');
       if (ab) { ab.textContent = 'Undo Apply'; ab.classList.add('applied-btn-undo'); }
       list.appendChild(clone);
+      if (cbox && signedIn) renderHistory(clone);
       n++;
     });
     if (count) count.textContent = '(' + n + ')';
@@ -561,28 +572,29 @@
     sb.auth.signOut();
   });
 
-  document.querySelectorAll('.job').forEach(function (job) {
-    var k = job.getAttribute('data-jobkey');
-    if (!k) return;
+  document.addEventListener('click', function (ev) {
+    var btn = ev.target.closest ? ev.target.closest('.note-save') : null;
+    if (!btn) return;
+    var job = btn.closest('.job');
+    var k = job ? job.getAttribute('data-jobkey') : null;
+    if (!job || !k) return;
     var box = job.querySelector('.notes');
     if (!box) return;
     var ta = box.querySelector('.note-text');
     var status = box.querySelector('.note-status');
-    box.querySelector('.note-save').addEventListener('click', function () {
-      var text = ta.value.trim();
-      if (!text) { status.textContent = 'Write something first.'; return; }
-      status.textContent = 'Saving...';
-      sb.from('job_note_entries').insert({ job_key: k, note: text }).select().then(function (res) {
-        if (res.error) { status.textContent = 'Error: ' + res.error.message; return; }
-        if (res.data && res.data[0]) {
-          if (!entriesByKey[k]) entriesByKey[k] = [];
-          entriesByKey[k].push(res.data[0]);
-        }
-        ta.value = '';
-        renderHistory(job);
-        status.textContent = 'Saved.';
-        setTimeout(function () { status.textContent = ''; }, 2000);
-      });
+    var text = ta.value.trim();
+    if (!text) { status.textContent = 'Write something first.'; return; }
+    status.textContent = 'Saving...';
+    sb.from('job_note_entries').insert({ job_key: k, note: text }).select().then(function (res) {
+      if (res.error) { status.textContent = 'Error: ' + res.error.message; return; }
+      if (res.data && res.data[0]) {
+        if (!entriesByKey[k]) entriesByKey[k] = [];
+        entriesByKey[k].push(res.data[0]);
+      }
+      ta.value = '';
+      renderHistory(job);
+      status.textContent = 'Saved.';
+      setTimeout(function () { status.textContent = ''; }, 2000);
     });
   });
 })();
