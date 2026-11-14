@@ -26,7 +26,7 @@
   .fav-btn[aria-pressed="true"] { color: #e8a100; }
   .arch-btn { float: right; background: #eef1f6; border: 1px solid #c9d2e0; border-radius: 999px; font-size: 0.78rem; cursor: pointer; color: #44506a; padding: 3px 10px; margin: 2px 6px 0 0; }
   .job-archived { display: none !important; }
-  .applied-btn { float: right; background: #e7f4ea; border: 1px solid #b7dcc0; border-radius: 999px; font-size: 0.78rem; cursor: pointer; color: #1e6b30; padding: 3px 10px; margin: 2px 6px 0 0; }
+  .applied-btn { float: right; background: #dbeafe; border: 1px solid #93c5fd; border-radius: 999px; font-size: 0.78rem; cursor: pointer; color: #1e40af; padding: 3px 10px; margin: 2px 6px 0 0; }
   .job-applied-hidden { display: none !important; }
   .fav-empty { color: #5a6472; font-size: 0.92rem; padding: 4px 2px; }
   .job a.t { font-weight: 600; font-size: 1.03rem; color: #0b5cad; text-decoration: none; }
@@ -440,7 +440,7 @@
       clone.removeAttribute('data-applied');
       clone.hidden = false;
       var ab = clone.querySelector('.applied-btn');
-      if (ab) ab.textContent = 'Undo';
+      if (ab) ab.textContent = 'Undo Apply';
       list.appendChild(clone);
       n++;
     });
