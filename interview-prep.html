@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<link rel="icon" href="data:,">
+<title>Interview Prep — Senior Linux, Cloud & Platform Q&A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f7f8; --surface:#ffffff; --surface2:#eef3f5; --surface3:#e8eef1;
+  --text:#0f2536; --text2:#334e63; --muted:#647b8d; --border:#dbe4ea; --border2:#cbd8e1;
+  --accent:#1a56db; --accent-hover:#1748b5; --teal:#0e7490; --radius:10px;
+  --header-h:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0d161f; --surface:#13202d; --surface2:#182938; --surface3:#1e3448; --text:#e6eef3; --text2:#b8cbd9; --muted:#8aa0b3; --border:#24394c; --border2:#2f4a61; --accent:#5b8cff; --accent-hover:#7aa3ff; --teal:#38bdf8; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+button,[role="button"],select,summary,input{font-family:inherit}
+button,select{ min-height:40px}
+code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.86em;background:var(--surface2);border:1px solid var(--border);padding:.1em .35em;border-radius:5px;color:var(--text)}
+pre{font-family:"JetBrains Mono",monospace;font-size:.82rem;line-height:1.55;background:#0f2536;color:#dbeafe;padding:14px 16px;border-radius:8px;overflow:auto;margin:10px 0;white-space:pre-wrap;word-break:break-word}
+@media(prefers-color-scheme:dark){pre{background:#0a121b}}
+pre code{background:none;border:none;padding:0;color:inherit}
+/* header */
+.topbar{position:sticky;top:0;z-index:50;height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 20px}
+.logo{font-weight:700;font-size:1.05rem;letter-spacing:-.02em;color:var(--text);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo-mark{color:var(--accent);font-weight:700}
+.logo-slash{color:var(--muted);font-weight:400;margin:0 2px}
+.logo-docs{font-weight:500;color:var(--muted);font-size:.95rem}
+.topnav{display:flex;gap:22px;margin:0 auto}
+.topnav a{color:var(--text2);font-size:.92rem;font-weight:500;padding:10px 2px}
+.topnav a:hover{color:var(--text);text-decoration:none}
+.top-search{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0 10px;height:40px;min-width:180px}
+.top-search input{border:none;background:none;outline:none;font-size:.9rem;width:110px;color:var(--text)}
+.top-search kbd{font-size:.7rem;background:var(--surface);border:1px solid var(--border2);border-radius:4px;padding:1px 6px;color:var(--muted)}
+@media(max-width:760px){.topnav{display:none}.top-search{min-width:0}.top-search input{width:70px}}
+/* layout */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+.hero{padding:52px 0 8px}
+.kicker{font-size:.72rem;letter-spacing:.14em;font-weight:600;color:var(--teal);text-transform:uppercase}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.02;letter-spacing:-.04em;margin:14px 0 16px;font-weight:700;max-width:680px}
+.hero p.lead{font-size:1.12rem;color:var(--text2);max-width:620px;line-height:1.6;margin:0 0 24px}
+.hero-search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:0 16px;height:56px;max-width:680px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.hero-search input{flex:1;border:none;outline:none;font-size:1rem;background:none;color:var(--text)}
+.hero-search span{color:var(--muted);border:1px solid var(--border);border-radius:5px;padding:2px 8px;font-size:.8rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 8px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0 18px;height:44px;border-radius:8px;font-weight:600;font-size:.92rem;border:1px solid var(--border2);background:var(--surface);color:var(--text);cursor:pointer}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover);text-decoration:none}
+.btn:hover{text-decoration:none;border-color:var(--muted)}
+.btn small{font-weight:400;opacity:.8;border-left:1px solid rgba(0,0,0,.15);padding-left:8px;margin-left:2px}
+.quick{margin:28px 0 8px;border-top:1px solid var(--border);padding-top:22px}
+.quick h3{font-size:.95rem;margin:0 0 14px}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.quick-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.quick-grid{grid-template-columns:1fr}}
+.quick-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:block;color:var(--text)}
+.quick-card:hover{text-decoration:none;border-color:var(--border2)}
+.quick-card strong{display:flex;justify-content:space-between;font-size:.92rem}
+.quick-card span{font-size:.84rem;color:var(--muted)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:38px 0 18px;border-top:1px solid var(--border);padding-top:28px}
+.section-head h2{font-size:1.65rem;letter-spacing:-.03em;margin:6px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-bottom:10px}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 20px 16px;display:flex;flex-direction:column;min-height:176px;color:var(--text);cursor:pointer}
+.card:hover{border-color:var(--border2);box-shadow:0 4px 18px rgba(15,37,54,.06);text-decoration:none}
+.card-top{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:.78rem;color:var(--teal)}
+.card-top span:last-child{color:var(--muted)}
+.card h3{font-size:1.08rem;margin:14px 0 6px;letter-spacing:-.02em;line-height:1.25}
+.card p{font-size:.9rem;color:var(--muted);line-height:1.55;margin:0;flex:1}
+.card-arrow{color:var(--accent);margin-top:14px;font-size:1rem}
+/* docs layout */
+.docs{display:grid;grid-template-columns:268px 1fr;gap:0;align-items:start}
+@media(max-width:860px){.docs{grid-template-columns:1fr}}
+.sidebar{position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));overflow:auto;padding:22px 16px 30px 0;border-right:1px solid var(--border)}
+@media(max-width:860px){.sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:14px 0}}
+.sidebar-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px 10px}
+.side-link{display:flex;gap:10px;align-items:baseline;padding:9px 10px;border-radius:7px;color:var(--text2);font-size:.92rem;line-height:1.35}
+.side-link:hover{background:var(--surface2);text-decoration:none;color:var(--text)}
+.side-link.active{background:var(--surface);border:1px solid var(--border);color:var(--text);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.side-link .num{font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--teal);min-width:22px}
+.side-link .count{margin-left:auto;font-size:.75rem;color:var(--muted)}
+.mobile-select{display:none;width:100%;padding:0 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:.95rem}
+@media(max-width:860px){.side-nav-list{display:none}.mobile-select{display:block}}
+.content{padding:28px 0 60px 34px;max-width:820px}
+@media(max-width:860px){.content{padding:22px 0 50px}}
+.content .crumb{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.content h1{font-size:2.1rem;letter-spacing:-.03em;line-height:1.1;margin:10px 0 10px}
+.intro{font-size:1.02rem;color:var(--text2);line-height:1.65;border-left:3px solid var(--accent);padding-left:16px;margin:16px 0 8px}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.pill{font-size:.78rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 10px;color:var(--muted)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:20px 0 6px;position:sticky;top:76px;z-index:5}
+.toolbar p{margin:0;font-size:.86rem;color:var(--muted)}
+.toolbar-actions{display:flex;gap:8px}
+.small-btn{height:36px;padding:0 12px;border-radius:7px;border:1px solid var(--border2);background:var(--surface);font-weight:600;font-size:.84rem;cursor:pointer;color:var(--text)}
+.small-btn.primary{background:var(--text);color:var(--surface);border-color:var(--text)}
+.qa{border-bottom:1px solid var(--border);padding:20px 0 18px}
+.qa-head{display:flex;gap:14px;align-items:flex-start}
+.qnum{font-family:"JetBrains Mono",monospace;font-size:.78rem;color:#fff;background:var(--teal);min-width:30px;height:30px;border-radius:999px;display:grid;place-items:center;margin-top:2px;flex-shrink:0}
+.qa h3{font-size:1.02rem;line-height:1.45;margin:2px 0 0;font-weight:600;letter-spacing:-.01em;flex:1}
+.reveal-btn{margin-top:12px;margin-left:44px;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--border2);background:var(--surface);font-size:.84rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.answer{margin:12px 0 0 44px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;font-size:.94rem;line-height:1.7;color:var(--text2)}
+.answer p{margin:0 0 10px}.answer p:last-child{margin-bottom:0}
+.answer ul{margin:6px 0 10px;padding-left:18px}
+@media(max-width:560px){.answer,.reveal-btn{margin-left:0}.qa-head{gap:10px}}
+.refs{margin-top:36px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:22px}
+.refs h2{font-size:1.15rem;margin:0 0 4px}
+.refs p.sub{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+.ref-item{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--border)}
+.ref-item:first-of-type{border-top:none}
+.badge{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:4px 7px;border-radius:999px;height:fit-content;white-space:nowrap}
+.badge.web{background:#dbeafe;color:#1e40af}.badge.video{background:#fef3c7;color:#92400e}
+@media(prefers-color-scheme:dark){.badge.web{background:#1e3a5f;color:#bfdbfe}.badge.video{background:#451a03;color:#fde68a}}
+.ref-item strong{font-size:.94rem}
+.ref-item p{margin:2px 0 0;font-size:.88rem;color:var(--muted)}
+.next-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+@media(max-width:560px){.next-nav{grid-template-columns:1fr}}
+.next-card{border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:14px 16px;color:var(--text)}
+.next-card span{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.next-card strong{display:block;margin-top:4px}
+footer{border-top:1px solid var(--border);background:var(--surface);margin-top:40px;padding:28px 0 36px}
+.footer-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.hidden{display:none!important}
+.progress{height:6px;background:var(--surface3);border-radius:999px;overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;background:var(--accent);width:0%}
+.study-tip{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-top:18px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.study-tip h3{margin:0 0 4px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a href="#/" class="logo" style="text-decoration:none"><span class="logo-mark">~/</span> Interview Prep <span class="logo-slash">/</span> <span class="logo-docs">docs</span></a>
+  <nav class="topnav"><a href="#/">Start here</a><a href="#all">All subjects</a><a href="#tips">Study tips</a><a href="#rhel">RHEL</a></nav>
+  <label class="top-search">⌕ <input id="topSearch" placeholder="Search" aria-label="Search subjects"> <kbd>/</kbd></label>
+</header>
+
+<!-- HOME -->
+<div id="homeView">
+  <div class="wrap">
+    <section class="hero">
+      <div class="kicker">Interview Prep &nbsp;/&nbsp; Documentation</div>
+      <h1>Prepare like a senior.<br>Answer like one.</h1>
+      <p class="lead">Practical Q&amp;A for Linux, cloud and platform roles — 156 questions across 13 subjects, written for a Senior Linux Administrator / SRE-DevOps lead. Self-test first, then reveal the model answer.</p>
+      <div class="hero-search">⌕ <input id="heroSearch" placeholder="Find a subject, command or topic — try “SELinux”, “CrashLoopBackOff”, “rebase”..."> <span>/</span></div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#rhel">Start with RHEL →</a>
+        <a class="btn" href="#all">Browse all subjects <small>13 subjects · 156 Q&amp;As</small></a>
+      </div>
+      <div class="quick">
+        <h3>What are you prepping for?</h3>
+        <div class="quick-grid">
+          <a class="quick-card" href="#kubernetes"><strong>Kubernetes deep-dive <span>↗</span></strong><span>Pods, scheduling, RBAC, Helm</span></a>
+          <a class="quick-card" href="#rhel"><strong>RHEL &amp; SELinux <span>↗</span></strong><span>systemd, LVM, firewalld, Leapp</span></a>
+          <a class="quick-card" href="#terraform"><strong>Terraform &amp; IaC <span>↗</span></strong><span>State, modules, drift, for_each</span></a>
+          <a class="quick-card" href="#python"><strong>Python for ops <span>↗</span></strong><span>GIL, decorators, subprocess</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-head" id="all">
+      <div><div class="kicker">Explore the library</div><h2>Find your next subject</h2></div>
+      <a href="#all" style="font-size:.9rem">All subjects →</a>
+    </div>
+    <p style="color:var(--muted);font-size:.92rem;margin:-6px 0 16px">For Keith Hyde — Senior Linux Administrator (RHEL / Azure / Kubernetes / OpenShift / Ansible / Terraform). Each subject: 12 questions, hidden answers for self-testing, and curated references at the end.</p>
+    <div class="grid" id="subjectGrid"></div>
+
+    <div class="study-tip" id="tips">
+      <div style="font-size:1.6rem;font-family:monospace;color:var(--accent)">~/lab_</div>
+      <div style="flex:1;min-width:240px">
+        <div class="kicker">How to use this</div>
+        <h3>Self-test, don’t just read</h3>
+        <p style="margin:0;color:var(--muted);font-size:.94rem">Open a subject, say your answer out loud in 30–60 seconds, then hit <b>Show answer</b> and compare. Use <b>Expand all</b> the night before for a fast skim. The strongest senior answers name the trade-off, the command, and what you’d check next.</p>
+      </div>
+      <a class="btn" href="#linux">Start with Linux →</a>
+    </div>
+  </div>
+  <footer><div class="wrap footer-grid"><div><div class="logo">~/ Interview Prep</div><p style="color:var(--muted);font-size:.9rem">Build answers you understand.</p></div><div style="font-size:.9rem;line-height:2"><a href="https://docs.redhat.com" target="_blank" rel="noopener">Red Hat Docs ↗</a><br><a href="https://kubernetes.io/docs" target="_blank" rel="noopener">Kubernetes Docs ↗</a><br><a href="https://developer.hashicorp.com/terraform" target="_blank" rel="noopener">Terraform Docs ↗</a></div><div><div class="kicker">156 questions</div><p style="color:var(--muted);font-size:.9rem">13 subjects · Senior level<br>Styled after docs.techdox.nz</p></div></div></footer>
+</div>
+
+<!-- SUBJECT VIEW -->
+<div id="subjectView" class="hidden">
+  <div class="wrap docs">
+    <aside class="sidebar">
+      <p class="sidebar-label">Subjects</p>
+      <select class="mobile-select" id="mobileSelect" aria-label="Choose subject"></select>
+      <nav class="side-nav-list" id="sideNav"></nav>
+      <div style="margin-top:20px;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">
+        <p style="margin:0;font-size:.84rem;color:var(--muted)"><b style="color:var(--text)">Progress</b><br><span id="progressText">0 / 12 revealed</span></p>
+        <div class="progress"><i id="progressBar"></i></div>
+      </div>
+    </aside>
+    <main class="content" id="subjectContent"></main>
+  </div>
+</div>
+
+<script>
+const SUBJECTS = [];
+</script>
+<script>
+SUBJECTS.push(
+{id:"rhel",num:"01",title:"Red Hat Linux (RHEL)",desc:"Subscriptions, SELinux, systemd, dnf streams, LVM, firewalld and upgrades.",intro:"Interviewers probe whether you can run RHEL as a supported enterprise platform — not just Linux in general. Expect subscription, SELinux, systemd and storage questions, plus how you work with Red Hat Support and apply a security baseline.",questions:[
+{q:"What is the difference between RHEL, CentOS Stream, and Fedora, and where does each fit?",a:`<p>Fedora is the upstream community distro where new features land first (6-month cycle). CentOS Stream is the continuously-delivered midstream between Fedora and RHEL — it previews what becomes the next RHEL minor release. RHEL is the downstream, commercially supported product with 10-year lifecycle, certifications, and backported security fixes without version churn.</p><p>Fit: Fedora for development/experimentation, CentOS Stream for CI and pre-RHEL validation, RHEL for production where support, FIPS, and ISV certification matter.</p>`},
+{q:"How do you register a RHEL system and attach subscriptions with subscription-manager?",a:`<p>Register and auto-attach in one step, then verify:</p><pre><code>subscription-manager register --username &lt;user&gt; --auto-attach
+subscription-manager status
+subscription-manager list --consumed
+dnf repolist</code></pre><p>On cloud / with Simple Content Access (now default for most accounts), entitlements are organisation-wide so <code>--auto-attach</code> is often unnecessary — registration alone enables repos. For disconnected or Satellite environments you register against Satellite: <code>subscription-manager register --org="Org" --activationkey="AK-RHEL9"</code>. Always confirm the system purpose / role if your org uses it, as it drives which subscriptions SCA exposes.</p>`},
+{q:"Explain SELinux modes, and walk through troubleshooting an SELinux denial (audit log, ausearch, audit2allow, semanage, restorecon).",a:`<p>Modes: <b>enforcing</b> (policy enforced + logged), <b>permissive</b> (logged only), <b>disabled</b> (no policy — requires reboot to re-enable and a full relabel). Check with <code>getenforce</code> / <code>sestatus</code>; never leave a production box in permissive as a "fix".</p><p>Troubleshoot: reproduce, then inspect denials:</p><pre><code>ausearch -m AVC -ts recent
+sealert -a /var/log/audit/audit.log   # setroubleshoot
+ls -Z /var/www/html; ps -eZ | grep httpd</code></pre><p>Most denials are wrong labels, not bad policy: fix with <code>semanage fcontext -a -t httpd_sys_content_t "/data/web(/.*)?"</code> then <code>restorecon -Rv /data/web</code>. Use <code>audit2allow</code> only to understand the denial — generating a local module is a last resort after checking booleans (<code>getsebool -a</code>, <code>setsebool -P httpd_can_network_connect on</code>) and labels.</p>`},
+{q:"How do you create and enable a custom systemd service unit?",a:`<p>Create <code>/etc/systemd/system/myapp.service</code> (local units outrank <code>/usr/lib/systemd/system</code>):</p><pre><code>[Unit]
+Description=My App
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+User=myapp
+ExecStart=/opt/myapp/bin/run
+Restart=on-failure
+RestartSec=5
+[Install]
+WantedBy=multi-user.target</code></pre><p>Then <code>systemctl daemon-reload && systemctl enable --now myapp</code> and verify with <code>systemctl status</code> / <code>journalctl -u myapp -f</code>. Senior points: choose <code>Type=</code> correctly (<code>simple</code> vs <code>forking</code> vs <code>notify</code>), add hardening (<code>NoNewPrivileges=</code>, <code>ProtectSystem=</code>) and use drop-ins (<code>systemctl edit</code>) instead of editing vendor units.</p>`},
+{q:"How do module streams work in dnf, and how do you enable a specific application stream?",a:`<p>AppStream modules package multiple versions of a stack (e.g. Node.js, PostgreSQL, PHP) as <i>streams</i> with profiles. Only one stream of a module can be enabled at a time; enabling a non-default stream changes which RPMs dnf resolves.</p><pre><code>dnf module list postgresql
+dnf module enable postgresql:15
+dnf module install postgresql:15/server
+dnf module list --enabled</code></pre><p>Reset with <code>dnf module reset postgresql</code>. Caveat for interviews: modularity was de-emphasised in RHEL 9+ in favour of AppStream RPMs and containers — many stacks now ship as regular packages or Application Streams without module commands, so check <code>dnf list</code> first on RHEL 9/10.</p>`},
+{q:"How do you configure persistent networking with NetworkManager using nmcli?",a:`<p>NetworkManager is the default on RHEL 8/9/10; <code>nmcli</code> writes persistent connection profiles to <code>/etc/NetworkManager/system-connections/</code>. Example static config:</p><pre><code>nmcli con mod ens192 ipv4.method manual \\
+  ipv4.addresses 192.168.1.50/24 \\
+  ipv4.gateway 192.168.1.1 \\
+  ipv4.dns "192.168.1.10 8.8.8.8"
+nmcli con up ens192
+nmcli con show; ip a; nmcli dev status</code></pre><p>Create bonds/bridges/teams with <code>nmcli con add type bond ...</code> rather than editing ifcfg files (removed in RHEL 9+). Use <code>nmtui</code> only interactively; automation should use <code>nmcli</code> or the <code>network</code> RHEL system role in Ansible for idempotence.</p>`},
+{q:"Walk through extending an LVM logical volume and growing its filesystem online — XFS vs ext4 differences.",a:`<p>Extend the VG first if needed (<code>vgextend</code> with a new PV), then the LV and filesystem in one step:</p><pre><code>lvextend -L +20G /dev/vg_data/lv_data   # or -l +100%FREE
+# Preferred: extend + grow together
+lvextend -r -L +20G /dev/vg_data/lv_data
+vgs; lvs; df -h</code></pre><p><code>-r</code> calls <code>fsadm</code> to grow the fs. Manually: XFS grows with <code>xfs_growfs /mountpoint</code> (mountpoint, not device) and <b>cannot be shrunk</b>; ext4 grows with <code>resize2fs /dev/... </code> and can be shrunk offline only. Online growth is safe for both; shrinking is the risky, interview-worthy distinction.</p>`},
+{q:"What is tuned, and how do you apply and verify a tuned profile?",a:`<p><code>tuned</code> applies kernel/sysctl/sysfs settings as a named profile matched to workload (e.g. <code>throughput-performance</code>, <code>virtual-host</code>, <code>virtual-guest</code>, <code>network-latency</code>, <code>sap-hana</code>). It replaces hand-rolled sysctl tuning with a supported, reversible baseline.</p><pre><code>tuned-adm list
+tuned-adm recommend
+tuned-adm profile throughput-performance
+tuned-adm active; tuned-adm verify</code></pre><p>Mention that RHEL install / cloud images pick a sensible default, SAP and low-latency roles depend on the right profile, and custom profiles inherit from a parent in <code>/etc/tuned/</code>.</p>`},
+{q:"What is Leapp, and what are the key risks of an in-place RHEL upgrade?",a:`<p>Leapp is Red Hat's framework for in-place upgrades between major RHEL versions (e.g. 8→9, 9→10). Workflow: <code>leapp preupgrade</code> → remediate inhibitors → <code>leapp upgrade</code> → reboot into the upgrade initramfs → verify.</p><p>Risks: unsupported/custom packages and third-party kernel modules blocking the upgrade, inhibitors around removed drivers, Python/modularity changes, insufficient space in <code>/boot</code> and root, and no simple rollback — so a snapshot / verified backup is mandatory. Senior answer: Leapp suits standard, well-maintained fleets; for heavily customised or very old systems a fresh rebuild + data migration is often safer and more auditable.</p>`},
+{q:"How do firewalld zones work, and how does firewalld relate to nftables?",a:`<p>firewalld is a daemon that manages rules by <i>zone</i> (public, trusted, drop, dmz, etc.). Interfaces/sources bind to a zone; the zone defines allowed services/ports. Runtime vs permanent is the classic trap — without <code>--permanent</code> a change is lost on reload.</p><pre><code>firewall-cmd --get-active-zones
+firewall-cmd --zone=public --add-service=https --permanent
+firewall-cmd --reload
+firewall-cmd --list-all</code></pre><p>Since RHEL 8, firewalld is a management front-end whose backend is <b>nftables</b> (not iptables). You inspect the result with <code>nft list ruleset</code>, but you should not mix direct nftables rules with firewalld unless you own the conflict.</p>`},
+{q:"How do you generate and use an sos report when troubleshooting with Red Hat Support?",a:`<p><code>sos report</code> (formerly sosreport) collects logs, configs and system state into a single tarball for a support case — it is the first thing Red Hat Support asks for.</p><pre><code>dnf install sos
+sos report --ticket-id 01234567 --batch
+# Upload via Red Hat Customer Portal or:
+redhat-support-tool addattachment -i &lt;case&gt; &lt;file&gt;</code></pre><p>Senior points: run it as close to the incident as possible, note it can be large and may contain sensitive data (review / use <code>--clean</code> obfuscation in newer sos), and use plugins selectively (<code>-o systemd,networkmanager</code>) for faster targeted collection.</p>`},
+{q:"How do you apply a security baseline with OpenSCAP / the RHEL Security Guide profiles?",a:`<p>OpenSCAP scans and remediates a system against SCAP profiles shipped in <code>scap-security-guide</code> (e.g. CIS, STIG, PCI-DSS). You assess first, then remediate deliberately — blind remediation can break applications (password policy, audit, partitioning).</p><pre><code>dnf install openscap-scanner scap-security-guide
+oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml
+oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis \\
+  --results /tmp/results.xml --report /tmp/report.html \\
+  /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml</code></pre><p>In practice at scale you apply the profile at build time (Image Builder / Kickstart <code>%addon org_fedora_oscap</code>) or via the RHEL <code>rhel-system-roles</code> / Satellite, and re-scan for drift.</p>`}
+],refs:[
+{type:"web",title:"Red Hat Documentation",url:"https://docs.redhat.com",note:"Official RHEL, OpenShift and Satellite docs — the primary reference for any RHEL answer."},
+{type:"web",title:"Red Hat Customer Portal & KCS",url:"https://access.redhat.com",note:"Knowledgebase solutions, errata and case management. Where sos reports go."},
+{type:"web",title:"Red Hat Training & Certification",url:"https://www.redhat.com/en/services/training",note:"RHCSA (EX200) and RHCE (EX294) paths — the certs interviewers map to RHEL depth."},
+{type:"video",title:"Red Hat — Official YouTube Channel",url:"https://www.youtube.com/@RedHat",note:"Product demos, SELinux and systemd sessions from Red Hat engineers."},
+{type:"video",title:"Learn Linux TV — YouTube",url:"https://www.youtube.com/@LearnLinuxTV",note:"Clear RHEL-family administration walkthroughs, good for command refreshers."}
+]},
+{id:"linux",num:"02",title:"Linux (General)",desc:"Boot, processes, memory, inodes, permissions, signals and systemd vs cron.",intro:"This is the fundamentals screen every senior role shares. Interviewers look for a mental model — boot, process/memory, filesystem — not memorised flags, and for calm, ordered troubleshooting when the symptoms don't add up.",questions:[
+{q:"Walk through the Linux boot process from firmware to a running systemd system.",a:`<p>1) Firmware (BIOS/UEFI) runs POST and loads the bootloader from ESP/disk. 2) GRUB2 loads kernel + initramfs. 3) Kernel initialises hardware, mounts initramfs as temporary root, runs <code>/init</code>. 4) initramfs loads storage/network drivers, finds the real root, <code>switch_root</code>. 5) <code>systemd</code> as PID 1 processes <code>default.target</code> (usually <code>multi-user.target</code> or <code>graphical.target</code>), starting units in dependency order.</p><p>Troubleshoot with <code>systemd-analyze blame / critical-chain</code>, <code>journalctl -b</code>, and rescue/emergency targets from GRUB (<code>systemd.unit=rescue.target</code>, <code>init=/bin/bash</code> as last resort).</p>`},
+{q:"What is the difference between a process and a thread, and what are zombie and orphan processes?",a:`<p>A process is an isolated address space + resources (PID, memory, fds). Threads share the same address space and fds within a process, with separate stacks/registers — cheaper to create and switch, but a fault can corrupt siblings. See them with <code>ps -eLf</code> / <code>top -H</code>.</p><p>A <b>zombie</b> (<code>Z</code> in <code>ps</code>) has exited but its parent hasn't called <code>wait()</code> to reap its exit status — it holds only a PID-table entry; you fix the parent, not the zombie. An <b>orphan</b>'s parent died first; it is reparented to PID 1 (or nearest subreaper) which reaps it.</p>`},
+{q:"How does Linux use RAM for buffers/cache, and what does the OOM killer do?",a:`<p>Linux deliberately uses free RAM for page cache (file data) and buffers — <code>free -h</code> "available" is what matters, not "free". Cache is reclaimed under pressure, so high cache is healthy, not a leak.</p><p>When reclaim can't satisfy an allocation, the <b>OOM killer</b> scores processes (<code>/proc/&lt;pid&gt;/oom_score</code>, heuristics: memory use, <code>oom_score_adj</code>) and SIGKILLs the worst candidate to free memory. Tune with <code>oom_score_adj</code> / systemd <code>OOMScoreAdjust=</code> to protect critical services, and diagnose via <code>dmesg | grep -i "out of memory"</code> / <code>journalctl -k</code>.</p>`},
+{q:"What is an inode, and what happens when a filesystem runs out of inodes?",a:`<p>An inode is the filesystem metadata record for a file: type, permissions, owner, timestamps, size and pointers to data blocks — everything except the name (directory entries map names → inode numbers, <code>ls -i</code>).</p><p>You can have free blocks but zero inodes (millions of tiny files, mail spools, container layers): writes then fail with "No space left on device" despite <code>df -h</code> looking fine. Diagnose with <code>df -i</code>, find the culprit with <code>find</code> counts per directory, and prevent by sizing inode ratio (<code>mkfs -i / -N</code>) or using filesystems like XFS that allocate inodes dynamically.</p>`},
+{q:"Hard links vs symbolic links — differences and limitations.",a:`<p>A <b>hard link</b> is another directory entry pointing to the same inode — identical status, data survives until link count hits zero, cannot cross filesystems and (normally) cannot link directories. A <b>symlink</b> is a separate file containing a path string — can cross filesystems, can point to directories, and dangles if the target is removed.</p><pre><code>ln /data/file /data/file-hard
+ln -s /data/file /data/file-sym
+ls -li; stat /data/file*</code></pre><p>Interview trap: editing behaviour differs — some editors replace the file (breaking hard-link sharing) while symlinks follow the path.</p>`},
+{q:"Explain setuid, setgid, and the sticky bit, with examples.",a:`<p>Special permission bits (leading octal digit): <b>setuid (4)</b> — executable runs as file owner (e.g. <code>/usr/bin/passwd</code> is <code>4755</code> root, so users can update <code>/etc/shadow</code>). <b>setgid (2)</b> — executable runs as file group; on a directory, new files inherit the directory's group (shared team dirs: <code>2770</code>). <b>Sticky bit (1)</b> — on a directory, only the owner can delete their files (e.g. <code>/tmp</code> is <code>1777</code>).</p><p>Find risky setuid binaries with <code>find / -perm -4000 -type f</code> — a core hardening audit, as unexpected setuid root binaries are a privilege-escalation path.</p>`},
+{q:"A server shows high load average but low CPU usage — how do you troubleshoot it?",a:`<p>Load average counts runnable <i>plus</i> uninterruptible-sleep (D-state) tasks, so high load + low CPU almost always means I/O or resource wait, not CPU saturation. Work in order:</p><pre><code>uptime; top   # check %wa, D-state count
+ps aux | awk '$8 ~ /D/'
+iostat -xz 1; vmstat 1
+dmesg | tail; ss -s</code></pre><p>Common causes: slow/failing disk or NFS hang, memory pressure/swapping, or a lock/D-state pile-up behind one device. Confirm with <code>iostat</code> await/util, check the specific PIDs' stacks (<code>/proc/&lt;pid&gt;/stack</code>, <code>cat /proc/&lt;pid&gt;/wchan</code>).</p>`},
+{q:"What are signals? Compare SIGTERM, SIGKILL, and SIGHUP.",a:`<p>Signals are asynchronous notifications to a process (<code>kill -l</code>, <code>man 7 signal</code>). <b>SIGTERM (15)</b> — polite termination request, catchable, the default for <code>kill</code> and systemd stop; well-behaved apps clean up and exit. <b>SIGKILL (9)</b> — immediate, uncatchable/unblockable kernel termination; no cleanup, use only after TERM fails. <b>SIGHUP (1)</b> — originally terminal hangup; by convention many daemons reload config on HUP (<code>systemctl reload</code> often sends it).</p><p>Senior nuance: PID 1 treats signals specially, and in containers an app as PID 1 that doesn't handle SIGTERM will hang until SIGKILL after the grace period — a classic Docker/Kubernetes shutdown bug.</p>`},
+{q:"How does hostname resolution work on a modern Linux host (nsswitch, /etc/resolv.conf, systemd-resolved)?",a:`<p>Applications call the NSS/glibc resolver; <code>/etc/nsswitch.conf</code> defines order for <code>hosts:</code> — typically <code>files myhostname resolve [!UNAVAIL=return] dns</code>. That means: <code>/etc/hosts</code> first, local hostname handling, then systemd-resolved (stub resolver at <code>127.0.0.53</code> in <code>/etc/resolv.conf</code>), then classic DNS.</p><p>Debug with <code>getent hosts &lt;name&gt;</code> (respects NSS, unlike <code>dig</code> which queries DNS directly), <code>resolvectl status / query</code>, and check per-link DNS from DHCP/NetworkManager. The <code>dig</code> vs <code>getent</code> mismatch is the interview tell.</p>`},
+{q:"systemd timers vs cron — when would you use each?",a:`<p>Both schedule jobs. <b>cron</b> is simple, ubiquitous, minute-granularity, with mail-based output and no dependency or logging integration. <b>systemd timers</b> trigger service units, so you get journal logging, dependencies (<code>After=network-online.target</code>), resource controls, <code>Persistent=true</code> catch-up after downtime, and calendar + monotonic timers (<code>OnCalendar=</code>, <code>OnBootSec=</code>).</p><pre><code>systemctl list-timers --all
+systemd-analyze calendar "Mon 02:00"</code></pre><p>Rule of thumb: new work on a systemd host → timer; keep cron for portability, user crontabs, and legacy estates.</p>`},
+{q:"How do you find which process is listening on a given TCP port?",a:`<pre><code>ss -tlnp | grep :8080
+# Alternatives:
+lsof -iTCP:8080 -sTCP:LISTEN
+fuser 8080/tcp</code></pre><p><code>ss</code> (from iproute2) is the modern default — <code>netstat</code> is deprecated. <code>-t</code> TCP, <code>-l</code> listening, <code>-n</code> numeric, <code>-p</code> process (needs root to see other users' PIDs). Extend the answer: inside a container / another net namespace use <code>nsenter -t &lt;pid&gt; -n ss -tlnp</code>, and for the owning systemd unit, <code>systemctl status &lt;pid&gt;</code> / <code>ps -o unit= -p &lt;pid&gt;</code>.</p>`},
+{q:"What is the difference between /proc and /sys?",a:`<p>Both are virtual filesystems (no disk storage, generated by the kernel). <b>/proc</b> is the older, process-centric interface: <code>/proc/&lt;pid&gt;/</code> (cmdline, status, fd/, maps) plus system info (<code>/proc/cpuinfo</code>, <code>/proc/meminfo</code>, <code>/proc/sys/</code> sysctls). <b>/sys</b> (sysfs) is the structured device/driver model: <code>/sys/class/</code>, <code>/sys/block/</code>, <code>/sys/devices/</code> — one value per file, representing kernel objects (kobjects).</p><p>Practical line: tune kernel parameters via <code>/proc/sys</code> (or <code>sysctl</code>), inspect devices and power/block state via <code>/sys</code>; tools like <code>ps</code>/<code>top</code> read <code>/proc</code>, <code>udev</code> works with <code>/sys</code>.</p>`}
+],refs:[
+{type:"web",title:"The Linux Documentation Project",url:"https://tldp.org",note:"Classic guides — Advanced Bash-Scripting and System Administrator guides still referenced in interviews."},
+{type:"web",title:"man7.org — Linux man pages online",url:"https://man7.org/linux/man-pages/",note:"Michael Kerrisk's authoritative man pages — cite this for signals, namespaces and syscalls."},
+{type:"web",title:"Linux man pages — die.net mirror",url:"https://linux.die.net/man/",note:"Fast searchable man page mirror for quick command checks."},
+{type:"video",title:"Learn Linux TV — YouTube",url:"https://www.youtube.com/@LearnLinuxTV",note:"Structured Linux admin series, strong on systemd, LVM and troubleshooting."},
+{type:"video",title:"NetworkChuck — YouTube (Linux videos)",url:"https://www.youtube.com/@NetworkChuck",note:"High-energy Linux fundamentals — good for quick refresh before a screen."}
+]},
+{id:"kubernetes",num:"03",title:"Kubernetes",desc:"Control plane, workloads, services, scheduling, storage, RBAC and Helm.",intro:"Senior Kubernetes interviews test failure modes and trade-offs, not YAML recall. Be ready to explain what the control plane does when a node dies, why a pod is pending, and how you'd secure and roll back a production workload.",questions:[
+{q:"Describe the Kubernetes control plane — what does each component do?",a:`<p><b>kube-apiserver</b> — REST front door, validates and persists state, the only component that talks to etcd. <b>etcd</b> — distributed key-value store, the cluster's source of truth (backup is critical). <b>kube-scheduler</b> — assigns unscheduled pods to nodes (filter → score). <b>kube-controller-manager</b> — runs control loops (ReplicaSet, Node, EndpointSlice, etc.) driving actual state toward desired state. <b>cloud-controller-manager</b> — cloud-specific logic (LBs, routes, node lifecycle).</p><p>On workers: <code>kubelet</code> runs pods via the container runtime and reports status; <code>kube-proxy</code> (or its replacement) implements Service networking.</p>`},
+{q:"Pod vs ReplicaSet vs Deployment — and when do you use a StatefulSet, DaemonSet, or Job/CronJob instead?",a:`<p>A <b>Pod</b> is the smallest deployable unit (one or more co-located containers) — rarely created directly. A <b>ReplicaSet</b> ensures N identical pods exist. A <b>Deployment</b> manages ReplicaSets to provide declarative rolling updates and rollbacks — the default for stateless services.</p><p>Use <b>StatefulSet</b> for stable identity/storage (databases: <code>web-0, web-1</code>, ordered ops), <b>DaemonSet</b> for one pod per node (CNI, node exporter, log agent), <b>Job</b> for run-to-completion work and <b>CronJob</b> for scheduled Jobs.</p>`},
+{q:"Compare ClusterIP, NodePort, LoadBalancer services and Ingress.",a:`<p><b>ClusterIP</b> (default) — virtual IP reachable only inside the cluster. <b>NodePort</b> — also opens a high port (30000–32767) on every node. <b>LoadBalancer</b> — provisions a cloud LB in front of NodePort/ClusterIP. All three are L4.</p><p><b>Ingress</b> (and now Gateway API) is L7 HTTP/S routing — host/path rules, TLS termination — implemented by an ingress controller (NGINX, ALB, etc.). Senior note: Ingress is frozen; new designs should evaluate <b>Gateway API</b> as its successor.</p>`},
+{q:"How does the scheduler decide where a pod lands? Explain taints, tolerations, and node affinity.",a:`<p>Two phases: <b>filtering</b> (nodes that can't fit the pod — insufficient CPU/mem, taints, affinity, volume constraints) then <b>scoring</b> (rank the survivors). Requests drive filtering/scoring; limits do not.</p><p><b>Taints</b> repel pods from a node (<code>key=value:NoSchedule/NoExecute/PreferNoSchedule</code>); <b>tolerations</b> on the pod allow it to schedule despite a taint (they don't attract it). <b>Node affinity</b> attracts/requires nodes by label (<code>requiredDuringScheduling</code> = hard, <code>preferred...</code> = soft); pod anti-affinity spreads replicas across nodes/zones.</p>`},
+{q:"ConfigMaps vs Secrets — how are they consumed by pods, and what are Secrets' limitations?",a:`<p>Both decouple config from images and are consumed as env vars or mounted files (file mounts update without restart; env vars don't). <b>ConfigMaps</b> hold non-sensitive config. <b>Secrets</b> are for sensitive values but are only <b>base64-encoded, not encrypted</b> by default — anyone with etcd or RBAC read access can decode them.</p><p>Production answer: enable etcd encryption at rest, restrict RBAC, and prefer an external secrets manager (External Secrets Operator, CSI driver, cloud KMS) with short-lived, mounted secrets over native Secrets alone.</p>`},
+{q:"Liveness vs readiness vs startup probes — what happens when each fails?",a:`<p><b>Readiness</b> — failing removes the pod from Service endpoints (no traffic) but doesn't restart it; used for warm-up/dependency checks. <b>Liveness</b> — failing makes kubelet restart the container; used to recover from deadlocks. <b>Startup</b> — gates the other two for slow-starting apps; failing also restarts, but only during startup.</p><p>Classic mistake: making liveness depend on a downstream service — a DB outage then restarts every pod in a cascade. Probes can be <code>httpGet</code>, <code>tcpSocket</code> or <code>exec</code>.</p>`},
+{q:"How do you troubleshoot a pod stuck in CrashLoopBackOff?",a:`<p>CrashLoopBackOff means the container starts, exits, and kubelet backs off exponentially (10s → 5m cap). Systematic order:</p><pre><code>kubectl describe pod &lt;pod&gt;
+kubectl logs &lt;pod&gt; --previous
+kubectl get events --sort-by=.lastTimestamp
+kubectl logs &lt;pod&gt;   # current attempt</code></pre><p><code>--previous</code> is the key flag — it shows the crashed container's logs. Then classify: app error/config (fix config/secret), OOMKilled (<code>describe</code> shows reason, raise limits/requests), bad command/image, or failing liveness probe. Check exit codes in <code>lastState.terminated</code>.</p>`},
+{q:"How do rolling updates and rollbacks work in a Deployment?",a:`<p>Changing the pod template creates a new ReplicaSet; the Deployment scales the new RS up and the old down respecting <code>maxSurge</code> and <code>maxUnavailable</code> (defaults 25%). Readiness gates progress; <code>progressDeadlineSeconds</code> marks a stuck rollout.</p><pre><code>kubectl rollout status deploy/app
+kubectl rollout history deploy/app
+kubectl rollout undo deploy/app --to-revision=2
+kubectl rollout restart deploy/app</code></pre><p>Rollback reuses a previous ReplicaSet template — it does not undo database migrations or external side effects, which is why schema changes need backward-compatible design.</p>`},
+{q:"Explain PersistentVolumes, PersistentVolumeClaims, and StorageClasses.",a:`<p>A <b>PersistentVolume (PV)</b> is cluster storage provisioned by an admin or dynamically. A <b>PersistentVolumeClaim (PVC)</b> is a pod's request for storage (size, access mode, class) that binds to a suitable PV. A <b>StorageClass</b> defines the provisioner (e.g. EBS, Azure Disk, Ceph) and parameters, enabling <i>dynamic provisioning</i> — a PV is created on demand when a PVC references the class.</p><p>Key details: reclaim policy (<code>Retain</code> vs <code>Delete</code>), access modes (<code>RWO/RWX/ROX</code>), and that PVCs are namespaced while PVs/StorageClasses are cluster-scoped.</p>`},
+{q:"How does Kubernetes RBAC work — Roles, ClusterRoles, bindings, service accounts?",a:`<p>RBAC authorises API verbs (<code>get, list, watch, create...</code>) on resources for subjects (users, groups, ServiceAccounts). A <b>Role</b> grants permissions in one namespace; a <b>ClusterRole</b> is cluster-scoped (or reusable across namespaces). <b>RoleBinding / ClusterRoleBinding</b> attach a role to subjects — a RoleBinding can reference a ClusterRole to grant its permissions only within that namespace.</p><pre><code>kubectl auth can-i create pods --as=system:serviceaccount:ns:app
+kubectl create rolebinding ...</code></pre><p>Pods authenticate as ServiceAccounts via projected tokens. Least privilege + <code>kubectl auth can-i</code> auditing is the senior expectation; there are no deny rules in K8s RBAC.</p>`},
+{q:"What problem does Helm solve, and what is the anatomy of a Helm chart?",a:`<p>Helm is Kubernetes' package manager: it templates YAML so one chart deploys across environments with different values, versions releases, and supports upgrade/rollback. Without it teams copy-paste manifests and drift.</p><p>Anatomy: <code>Chart.yaml</code> (metadata/version), <code>values.yaml</code> (defaults), <code>templates/</code> (Go-templated manifests), <code>charts/</code> (dependencies), plus <code>_helpers.tpl</code>. Releases are tracked as Secrets in the namespace. Senior nuance: Helm is imperative at release level — in GitOps flows Argo CD/Flux often render Helm charts declaratively.</p>`},
+{q:"How does pod networking work — what does the CNI plugin provide, and what is kube-proxy's role?",a:`<p>Kubernetes requires: every pod gets its own IP, pods can reach any pod without NAT, and nodes can reach pods. The <b>CNI plugin</b> (Calico, Cilium, Flannel, Azure CNI...) implements this — it assigns IPs, sets up veth pairs/routes or overlay (VXLAN/IPIP), and often enforces NetworkPolicy (Cilium/Calico do; Flannel doesn't).</p><p><b>kube-proxy</b> implements Services: it watches apiserver and programs iptables/IPVS rules so ClusterIP:port DNATs to a backend pod. Many modern clusters replace kube-proxy with eBPF (Cilium) for performance and observability.</p>`}
+],refs:[
+{type:"web",title:"Kubernetes Documentation",url:"https://kubernetes.io/docs",note:"The official docs — concepts and kubectl reference to cite in answers."},
+{type:"web",title:"Killercoda — Interactive Kubernetes Labs",url:"https://killercoda.com",note:"Free browser labs (successor to Katacoda) for hands-on practice without a cluster."},
+{type:"video",title:"TechWorld with Nana — YouTube (Kubernetes course)",url:"https://www.youtube.com/@TechWorldwithNana",note:"Full Kubernetes course — excellent visual explanations of scheduling and networking."},
+{type:"video",title:"KodeKloud — YouTube + kodekloud.com",url:"https://kodekloud.com",note:"CKA-focused labs and mock exams; the standard cert-prep route."}
+]}
+);
+</script>
+<script>
+SUBJECTS.push(
+{id:"terraform",num:"04",title:"Terraform",desc:"State, modules, for_each, drift, backends, secrets and testing.",intro:"Terraform interviews centre on state — how you protect it, share it, and recover when reality drifts. Senior answers show module design judgement and a safe workflow (plan review, locking, policy), not just HCL syntax.",questions:[
+{q:"What is infrastructure as code, and walk through the Terraform workflow (init, plan, apply).",a:`<p>IaC declares infrastructure in versioned code so it is reviewable, repeatable and auditable, instead of click-ops. Terraform is declarative: you describe desired state and Terraform computes the diff via provider APIs.</p><pre><code>terraform init    # download providers/modules, configure backend
+terraform fmt -check; terraform validate
+terraform plan -out=tfplan   # preview diff, save plan
+terraform apply tfplan       # apply exactly that plan
+terraform destroy            # tear down managed resources</code></pre><p>Senior workflow: plan in CI on the PR, human review, apply the saved plan artifact — never <code>apply -auto-approve</code> blind on production.</p>`},
+{q:"Why does Terraform state matter, and how do remote backends and state locking work?",a:`<p>State (<code>terraform.tfstate</code>) maps config resources to real-world IDs and stores attributes Terraform can't otherwise know — without it Terraform can't diff or update, only recreate. It also holds dependency metadata and, often, sensitive values in plain text.</p><p>Remote backends (S3, AzureRM, GCS, Terraform Cloud) give shared, durable storage. <b>Locking</b> prevents concurrent writes corrupting state: S3 uses DynamoDB (historically) / S3 lockfile, AzureRM uses blob lease, GCS uses object locking. Rule: one state per environment blast radius, always remote + locked + versioned in team use.</p>`},
+{q:"What are modules, and how do you structure a reusable module?",a:`<p>A module is a reusable container for resources — any directory with <code>.tf</code> files is a module; the root module calls child modules with <code>source</code> (local path, Git, or Registry).</p><pre><code>module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 5.0"
+  cidr_block = var.cidr_block
+}</code></pre><p>Good structure: <code>main.tf, variables.tf, outputs.tf, versions.tf</code>, typed variables with validation, outputs that expose only what callers need, no hardcoded provider blocks inside child modules, and semantic versioning. Design modules around a cohesive capability (a VPC, an EKS cluster), not one resource per module.</p>`},
+{q:"Variables, outputs, and locals — and how variable precedence works.",a:`<p><b>Variables</b> are module inputs (<code>var.x</code>), <b>outputs</b> expose values to callers/CLI, <b>locals</b> are internal named expressions to avoid repetition (<code>local.common_tags</code>).</p><p>Precedence (lowest → highest): environment variables (<code>TF_VAR_</code>) → <code>terraform.tfvars</code> → <code>terraform.tfvars.json</code> → <code>*.auto.tfvars</code> (lexical) → <code>-var-file</code> → <code>-var</code> on the command line (highest). Senior point: defaults in <code>variables.tf</code> are overridden by all of the above; never put secrets in committed tfvars — inject via env / CI secrets.</p>`},
+{q:"Resources vs data sources — when do you use each?",a:`<p>A <b>resource</b> (<code>resource "aws_instance" ...</code>) is managed by Terraform — created, updated, destroyed, stored in state. A <b>data source</b> (<code>data "aws_ami" ...</code>) is read-only: it fetches information about something Terraform doesn't manage in this config (existing VPC, latest AMI, another state's outputs via <code>terraform_remote_state</code>) at plan time.</p><pre><code>data "aws_vpc" "shared" { tags = { Name = "shared" } }
+data "aws_ami" "ubuntu" { most_recent = true; owners = ["099720109477"] ... }</code></pre><p>Trap: data sources are re-read every plan, so a changing data source can force unexpected diffs.</p>`},
+{q:"count vs for_each — differences and when each is safer.",a:`<p><code>count</code> creates instances indexed by number (<code>[0], [1]</code>); removing a middle element shifts every later index, forcing destroy/recreate. <code>for_each</code> creates instances keyed by a map/set of strings (<code>["prod"]</code>); keys are stable, so adding/removing one element touches only that instance.</p><pre><code>resource "aws_subnet" "this" {
+  for_each = var.subnets
+  cidr_block = each.value
+}</code></pre><p>Rule: <code>for_each</code> for anything with identity (subnets, users, buckets); <code>count</code> only for simple on/off (<code>count = var.enabled ? 1 : 0</code>) or truly identical copies.</p>`},
+{q:"How do you detect and reconcile drift between state and real infrastructure?",a:`<p>Drift is when real infrastructure changes outside Terraform (console edits, other tools). Detect with <code>terraform plan</code> — any diff on an unchanged config is drift; use <code>terraform plan -refresh-only</code> to update state from reality without proposing changes, and Terraform 1.x drift detection in CI (scheduled plan that alerts on non-empty diff).</p><p>Reconcile by deciding the source of truth: if the manual change was intentional, codify it in config (and <code>import</code> if it's a new resource); if not, <code>apply</code> to revert it. Prevent recurrence with policy/alarms on console changes (CloudTrail) and by removing human write access where feasible.</p>`},
+{q:"Workspaces vs separate state per environment — trade-offs.",a:`<p>Workspaces share one backend/config with state partitioned by workspace name (<code>terraform workspace select prod</code>, <code>terraform.workspace</code> in code). Separate state uses distinct backends/config per environment (often via directories or Terragrunt).</p><p>Senior consensus: workspaces suit small, truly identical stacks but hide blast radius — one config/backend mistake can affect prod, and env differences creep into conditionals. Separate state per env (with shared modules) is the production default: clearer isolation, per-env backends/permissions, at the cost of some duplication managed by modules.</p>`},
+{q:"How do providers and version constraints work, and what is the dependency lock file for?",a:`<p>Providers are plugins that translate Terraform to vendor APIs. Declare them in <code>required_providers</code> with version constraints using pessimistic operators:</p><pre><code>terraform {
+  required_version = ">= 1.5"
+  required_providers {
+    aws = { source = "hashicorp/aws", version = "~> 5.0" }
+  }
+}</code></pre><p><code>~> 5.0</code> allows 5.x but not 6.0. <code>.terraform.lock.hcl</code> (created by <code>init</code>) pins exact provider versions + checksums for all platforms — commit it so every run uses identical, verified providers; update deliberately with <code>terraform init -upgrade</code>.</p>`},
+{q:"How should secrets be handled in Terraform — what must never happen with state?",a:`<p>Secrets passed as variables or read from data sources <b>will appear in plain text in state and plan files</b>, even if marked <code>sensitive = true</code> (that only redacts CLI display). Therefore: never commit state or plan files, encrypt the remote backend at rest, and restrict state access as tightly as the secrets themselves.</p><p>Better patterns: fetch secrets at runtime from Vault / Secrets Manager via data sources, use ephemeral / write-only arguments where providers support them (Terraform 1.11+), mark variables sensitive, and prefer dynamic provider credentials (OIDC) over long-lived keys.</p>`},
+{q:"How do terraform import and moved blocks help manage existing infrastructure?",a:`<p><code>import</code> brings an existing resource under management: write the resource block, then <code>terraform import aws_instance.web i-0123...</code> (or declarative <code>import</code> blocks in Terraform 1.5+, which are reviewable in plan and preferred). After import, run <code>plan</code> and adjust config until the diff is empty — import doesn't generate config (except via <code>-generate-config-out</code> as a starting point).</p><p><code>moved</code> blocks rename/refactor resource or module addresses in state without destroy/recreate — essential when extracting modules or switching <code>count</code> → <code>for_each</code>.</p>`},
+{q:"How do you test and validate Terraform code (validate, fmt, tflint, policy-as-code with OPA)?",a:`<p>Layered checks in CI: <code>terraform fmt -check</code> (formatting), <code>terraform validate</code> (syntax/schema, no API calls), <code>tflint</code> (provider-aware linting, unused declarations, naming), and security scanners (Checkov/tfsec) for misconfigurations.</p><p>Policy-as-code with <b>OPA/Conftest</b> or Sentinel evaluates the plan JSON (<code>terraform show -json tfplan</code>) against rules like "no public S3, mandatory tags". Add native <code>terraform test</code> (1.6+, <code>.tftest.hcl</code> with mocked providers) for module unit tests. Senior line: validate the <i>plan</i>, not just the code.</p>`}
+],refs:[
+{type:"web",title:"HashiCorp Developer — Terraform",url:"https://developer.hashicorp.com/terraform",note:"Official tutorials and language docs — start here for any HCL question."},
+{type:"web",title:"Terraform Registry",url:"https://registry.terraform.io",note:"Provider and module registry — check versions and usage for AWS/Azure/GCP modules."},
+{type:"video",title:"TechWorld with Nana — YouTube (Terraform course)",url:"https://www.youtube.com/@TechWorldwithNana",note:"Complete Terraform course from basics to modules and backends."},
+{type:"video",title:"KodeKloud — Terraform Training",url:"https://kodekloud.com",note:"Hands-on Terraform labs aligned to the HashiCorp associate cert."}
+]},
+{id:"docker",num:"05",title:"Docker",desc:"Namespaces, layers, networking, Compose, multi-stage builds and runtimes.",intro:"Docker questions separate people who run containers from people who understand them. Expect namespaces/cgroups, image-layer economics, and debugging a container that won't stay up — plus why Kubernetes moved on from Docker itself.",questions:[
+{q:"Containers vs virtual machines — and what namespaces and cgroups actually do.",a:`<p>A VM virtualises hardware: each guest runs its own kernel on a hypervisor — strong isolation, heavy footprint. A container shares the host kernel and isolates the process view: faster, denser, weaker boundary than a VM.</p><p><b>Namespaces</b> isolate what a process can see: <code>pid, net, mnt, uts, ipc, user, cgroup</code>. <b>cgroups</b> limit and account what it can use: CPU, memory, I/O, PIDs. Inspect with <code>lsns</code>, <code>cat /proc/&lt;pid&gt;/cgroup</code>, <code>systemd-cgls</code>. "Containers are just processes" is the senior one-liner — with those two kernel features applied.</p>`},
+{q:"How do image layers and build caching work? How do you write a Dockerfile that caches well?",a:`<p>Each Dockerfile instruction creates a read-only layer (UnionFS/overlay2); the image is the stack, the container adds a thin writable layer. The build cache reuses a layer if its inputs (instruction + copied file checksums) are unchanged — one miss invalidates all later layers.</p><p>Cache well: order least-changing first — copy dependency manifests and install, <i>then</i> copy source:</p><pre><code>COPY package*.json ./
+RUN npm ci
+COPY . .</code></pre><p>Use <code>.dockerignore</code>, pin base images, and combine noisy <code>RUN</code> steps where it helps.</p>`},
+{q:"COPY vs ADD, and CMD vs ENTRYPOINT — the differences.",a:`<p><b>COPY</b> copies local files verbatim — predictable, preferred. <b>ADD</b> also fetches remote URLs and auto-extracts local tar archives — surprising behaviour, use only when you need extraction.</p><p><b>ENTRYPOINT</b> is the fixed executable; <b>CMD</b> supplies its default arguments (overridden by <code>docker run image &lt;args&gt;</code>). Classic pattern:</p><pre><code>ENTRYPOINT ["python","app.py"]
+CMD ["--port","8080"]</code></pre><p>Use exec (JSON) form so the app is PID 1 and receives signals; shell form wraps it in <code>/bin/sh -c</code> and breaks signal handling.</p>`},
+{q:"Volumes vs bind mounts vs tmpfs — when to use each.",a:`<p><b>Volumes</b> — Docker-managed storage (<code>/var/lib/docker/volumes</code>), the default for persistent app data and databases; portable, backup via Docker tooling, shared between containers. <b>Bind mounts</b> — a host path mounted directly; ideal for development (live code) and for injecting host config, but host-dependent and less portable. <b>tmpfs</b> — memory-only, never persisted; for secrets-adjacent temp data and high-speed scratch.</p><p>Rule: production data → named volumes (or external storage); dev / config → bind mounts; ephemeral sensitive → tmpfs.</p>`},
+{q:"Explain Docker networking modes (bridge, host, overlay) and how Compose services find each other by name.",a:`<p><b>bridge</b> (default) — containers on a private virtual bridge with NAT to the host; publish ports with <code>-p 8080:80</code>. <b>host</b> — container shares the host network namespace (no port mapping, fastest, Linux only, least isolation). <b>overlay</b> — multi-host network (Swarm) tunnelling traffic between daemons. Also <code>none</code> and <code>macvlan</code>.</p><p>On user-defined bridges and Compose networks, Docker's embedded DNS resolves service/container names — Compose creates a network per project, so <code>web</code> reaches <code>db:5432</code> by service name with no links needed.</p>`},
+{q:"What is Docker Compose, and how do depends_on and healthchecks interact?",a:`<p>Compose defines a multi-container app in one YAML (<code>services, networks, volumes</code>) and runs it with <code>docker compose up</code> — the standard local/dev and small-host deployment tool.</p><p><code>depends_on</code> alone only orders <i>startup</i> — it does not wait for readiness. Combine with healthchecks for real gating:</p><pre><code>depends_on:
+  db:
+    condition: service_healthy
+# db defines: healthcheck: test: ["CMD","pg_isready"]</code></pre><p>That distinction — started vs healthy — is the most common Compose interview trap.</p>`},
+{q:"What are multi-stage builds, and how do they shrink images?",a:`<p>A multi-stage Dockerfile uses multiple <code>FROM</code> stages: build in a fat toolchain image, then copy only the artefacts into a minimal runtime image. Build tools, caches and source never ship.</p><pre><code>FROM golang:1.22 AS build
+WORKDIR /src; COPY . .; RUN go build -o app .
+FROM gcr.io/distroless/static
+COPY --from=build /src/app /app
+ENTRYPOINT ["/app"]</code></pre><p>Results are dramatic (1GB → 20MB) with a smaller attack surface. Same pattern for Node (build → slim runtime) and Java.</p>`},
+{q:"A container exits immediately — how do you debug it?",a:`<p>Start with state and logs, not guesses:</p><pre><code>docker ps -a   # exit code
+docker logs &lt;container&gt;
+docker inspect &lt;container&gt; --format '{{.State.ExitCode}} {{.Config.Cmd}}'
+docker run -it --entrypoint /bin/sh &lt;image&gt;  # interactive probe</code></pre><p>Common causes: main process finished/forked to background (container lives only as long as PID 1), missing env/config, architecture mismatch, or OOM. Exit codes help: 0 = finished, 1 = app error, 137 = SIGKILL/OOM, 126/127 = not executable / not found. Override the entrypoint to inspect the filesystem directly.</p>`},
+{q:"How do you scan images for vulnerabilities and keep base images patched?",a:`<p>Scan in CI and in the registry with tools like <b>Trivy, Grype, Docker Scout, Snyk</b> or cloud scanners (ECR/ACR scanning): <code>trivy image myapp:1.4</code>. Gate merges on critical/high fixable CVEs, but triage by reachability — not every CVE is exploitable.</p><p>Staying patched is a process: pin base images by digest, rebuild regularly (a rebuild picks up patched bases), automate base updates (Dependabot/Renovate), and prefer minimal bases (Alpine/distroless) to reduce CVE surface in the first place.</p>`},
+{q:"How do resource limits (CPU, memory) work for containers, and what happens on memory limit?",a:`<pre><code>docker run --memory=512m --memory-swap=512m --cpus=1.5 myapp
+docker stats; docker inspect --format '{{.HostConfig.Memory}}'</code></pre><p>These set cgroup limits. <b>CPU</b> is throttling/shares — the container slows. <b>Memory</b> is a hard wall: exceeding it triggers the kernel OOM killer <i>inside the cgroup</i> — the container's process is killed (exit 137) even if the host has free RAM. Set <code>--memory-reservation</code> as a soft limit. Kubernetes <code>requests/limits</code> map directly onto this.</p>`},
+{q:"Docker vs containerd vs CRI-O — why did Kubernetes drop Docker as a runtime?",a:`<p>Docker is a full stack (CLI, builder, daemon, runtime). Kubernetes only needs a CRI-compliant runtime. dockershim was the adapter translating CRI → Docker daemon → containerd — an extra hop. Kubernetes removed dockershim in 1.24 (dockershim removal) because maintaining it was costly when <b>containerd</b> and <b>CRI-O</b> speak CRI natively.</p><p>Key reassurance: images built by Docker still run everywhere (OCI standard) — only the node runtime changed, not your Dockerfiles. containerd is Docker's extracted core runtime; CRI-O is a lean, K8s-first alternative (used by OpenShift).</p>`},
+{q:"Tagging strategy for registries — why is 'latest' a problem in production?",a:`<p><code>latest</code> is mutable and ambiguous — it doesn't tell you what code is running, can't be rolled back reliably, and two deploys of "latest" can be different images. It also breaks caching/pull predictability.</p><p>Production strategy: immutable tags per build — semantic version + git SHA (<code>myapp:1.4.2-a1b2c3d</code>), promote the <i>same digest</i> across environments (<code>image@sha256:...</code>), and sign images (Cosign). Use <code>latest</code> only as a convenience pointer in development, never as a deployment reference.</p>`}
+],refs:[
+{type:"web",title:"Docker Documentation",url:"https://docs.docker.com",note:"Official docs — Dockerfile reference and networking/storage guides."},
+{type:"web",title:"Play with Docker — Labs",url:"https://labs.play-with-docker.com",note:"Free in-browser Docker labs from Docker, Inc. — no install needed."},
+{type:"video",title:"TechWorld with Nana — YouTube (Docker course)",url:"https://www.youtube.com/@TechWorldwithNana",note:"Complete Docker + Compose course, strong on production patterns."},
+{type:"video",title:"NetworkChuck — YouTube (Docker videos)",url:"https://www.youtube.com/@NetworkChuck",note:"Fast, memorable Docker explainers for last-minute refresh."}
+]},
+{id:"ansible",num:"06",title:"Ansible",desc:"Playbooks, inventory, idempotency, Vault, roles and testing.",intro:"Ansible interviews check whether you write automation that is safe to re-run on 500 hosts at 2 a.m. Idempotency, variable precedence, and rolling-change patterns matter more than module trivia.",questions:[
+{q:"How does Ansible work without agents, and what does it need on the managed host?",a:`<p>Ansible is agentless and push-based: the control node connects over <b>SSH</b> (Linux) or <b>WinRM</b> (Windows), copies a small Python module to the host, executes it, and removes it. Managed hosts need only SSH access, a Python interpreter (for most modules), and privilege escalation (<code>sudo</code> / <code>become</code>).</p><p>Trade-off to name: no agent means no drift daemon — Ansible enforces state when you run it, unlike Puppet/Chef agents that converge continuously. Network devices without Python use network modules executed on the control node.</p>`},
+{q:"Playbooks, plays, tasks, handlers, and roles — how do they fit together?",a:`<p>A <b>playbook</b> (YAML) contains one or more <b>plays</b>; a play maps a host group to tasks with a variable context. <b>Tasks</b> call modules in order. <b>Handlers</b> are special tasks triggered by <code>notify</code> that run once at play end (e.g. restart a service only if its config changed). <b>Roles</b> package reusable tasks/handlers/templates/vars with a standard directory layout.</p><pre><code>- hosts: web
+  roles: [nginx]
+  tasks:
+    - ansible.builtin.template: src=vhost.j2 dest=/etc/nginx/conf.d/app.conf
+      notify: Reload nginx</code></pre>`},
+{q:"Static vs dynamic inventory, and how group_vars and host_vars are used.",a:`<p><b>Static inventory</b> is a hand-maintained INI/YAML file of hosts/groups — fine for small, stable estates. <b>Dynamic inventory</b> is a plugin/script querying a source of truth (AWS EC2, Azure, VMware, NetBox) at runtime, grouping by tags/attributes — essential in cloud where hosts churn.</p><p><code>group_vars/&lt;group&gt;.yml</code> and <code>host_vars/&lt;host&gt;.yml</code> (adjacent to inventory or playbook) assign variables by scope automatically. Keep secrets out of them in plain text — encrypt with Vault.</p>`},
+{q:"What does idempotency mean in Ansible, and how do you make command/shell tasks safe (creates, changed_when)?",a:`<p>Idempotency: running a playbook twice yields the same state, with the second run reporting no changes. Declarative modules (<code>copy, template, package, service</code>) are idempotent by design; <code>command/shell/raw</code> are not — they always report "changed" and always execute.</p><pre><code>- ansible.builtin.command: /opt/app/init.sh
+  args:
+    creates: /opt/app/.initialised
+  changed_when: false   # for read-only commands</code></pre><p>Guard imperative tasks with <code>creates/removes</code>, <code>when</code> checks, and honest <code>changed_when/failed_when</code> expressions. Prefer a dedicated module over <code>shell</code> whenever one exists.</p>`},
+{q:"Explain Ansible's variable precedence at a high level.",a:`<p>Ansible has ~22 precedence levels — the interview answer is the shape, not the full list. Lowest to highest (simplified): role defaults → inventory group_vars (parent groups before child, alphabetical) → playbook group_vars → host_vars → gathered facts / inventory vars → play vars → vars files / prompts → block & task vars → extra vars (<code>-e</code>) which <b>always win</b>.</p><p>Practical rules: put overridable defaults in role <code>defaults/</code> (lowest), environment specifics in <code>group_vars</code>, and treat <code>-e</code> as an emergency override. Debug with <code>ansible -m debug -a "var=x"</code> and <code>--start-at-task</code>.</p>`},
+{q:"How do you use Jinja2 templates, loops, and conditionals (when) in playbooks?",a:`<p>Templates render config files with Jinja2 (<code>template</code> module, <code>.j2</code> files) using variables and facts: <code>{{ ansible_default_ipv4.address }}</code>, filters like <code>{{ list | join(',') }}</code>, <code>default()</code>, <code>lower</code>.</p><pre><code>- ansible.builtin.copy:
+    dest: "/etc/app/{{ item }}.conf"
+    content: "..."
+  loop: [api, worker]
+- ansible.builtin.service: name=nginx state=restarted
+  when: ansible_os_family == "RedHat" and nginx_enabled</code></pre><p>Use <code>loop</code> (not legacy <code>with_items</code>), keep logic in templates minimal, and remember <code>when</code> is evaluated per host/task.</p>`},
+{q:"How does Ansible Vault work for secrets?",a:`<p>Vault encrypts files or individual variables with AES-256 using a password/key file, so secrets can live in Git encrypted:</p><pre><code>ansible-vault create group_vars/prod/vault.yml
+ansible-vault encrypt_string 's3cret' --name db_password
+ansible-playbook site.yml --ask-vault-pass
+# or: --vault-password-file ~/.vault_pass (or a KMS/client script)</code></pre><p>Best practice: split plain vars and vault vars (<code>vars.yml</code> references <code>{{ vault_db_password }}</code>), use different passwords per environment, and source the password from CI secrets — never commit the password file.</p>`},
+{q:"What are roles and collections on Ansible Galaxy, and how do you pin versions?",a:`<p><b>Galaxy</b> is Ansible's hub for community content. A <b>role</b> is a single reusable automation unit; a <b>collection</b> bundles roles + modules + plugins under a namespace (<code>namespace.collection</code>) — the modern distribution format (e.g. <code>amazon.aws</code>, <code>community.general</code>).</p><pre><code># requirements.yml
+collections:
+  - name: amazon.aws
+    version: ">=7.0,<8.0"
+roles:
+  - src: geerlingguy.nginx
+    version: 3.1.0
+# install: ansible-galaxy install -r requirements.yml</code></pre><p>Always pin versions in <code>requirements.yml</code> and commit it — unpinned Galaxy content is a supply-chain and reproducibility risk.</p>`},
+{q:"How do you test playbooks — check mode, --diff, ansible-lint, Molecule?",a:`<p>Layered: <code>ansible-playbook --syntax-check</code> → <code>ansible-lint</code> (style + deprecation + risk rules, now near-mandatory in CI) → <code>--check --diff</code> (dry run showing what would change — note some modules/tasks don't support check mode) → <b>Molecule</b> for full role testing: it provisions ephemeral instances (Docker/cloud), converges the role, runs idempotence checks and Testinfra/Ansible verify tests, then destroys them.</p><p>Senior habit: every role change runs lint + Molecule in CI before merge; production runs start with a canary host group.</p>`},
+{q:"How do serial, delegate_to, and run_once help with rolling updates?",a:`<p><code>serial</code> batches hosts (e.g. <code>serial: 2</code> or <code>"25%"</code>) so a play updates a few at a time — combine with <code>max_fail_percentage</code> to halt a bad rollout. Typical pattern: remove host from LB → patch → health-check → re-add, per batch.</p><p><code>delegate_to</code> runs a task on a different host than the play target (LB node, localhost for API calls) while keeping the target's variables. <code>run_once</code> executes a task on the first host only (DB migrations, cluster-wide commands) — often combined with <code>delegate_to</code>.</p>`},
+{q:"What are gathered facts, and how do you disable or cache them?",a:`<p>Facts are host data collected by the <code>setup</code> module at play start (<code>ansible_os_family</code>, IPs, disks, virtualisation) — view with <code>ansible host -m setup</code>. They're invaluable for conditionals but gathering is slow on large fleets.</p><p>Control with <code>gather_facts: false</code> in the play (gather explicitly only where needed), subset gathering (<code>gather_subset: network</code>), and fact caching (<code>fact_caching = jsonfile/redis</code> + <code>fact_caching_timeout</code> in <code>ansible.cfg</code>) so facts persist between runs. Smart gathering skips re-gathering when a valid cache exists.</p>`},
+{q:"Ansible vs Terraform — where does each belong in a stack?",a:`<p><b>Terraform</b> provisions infrastructure (declarative state, lifecycle, destroy) — networks, VMs, clusters, managed services. <b>Ansible</b> configures systems and orchestrates procedures — packages, config files, users, app deploys, patching, multi-step operational runbooks.</p><p>Overlap (both can create cloud resources / install packages) is where judgement shows: use Terraform for anything with a lifecycle/state in the cloud API, Ansible for what happens <i>inside</i> the OS and for imperative orchestration. Common pipeline: Terraform builds → outputs inventory → Ansible configures.</p>`}
+],refs:[
+{type:"web",title:"Ansible Documentation",url:"https://docs.ansible.com",note:"Official docs — playbook, module and precedence references."},
+{type:"web",title:"Ansible Galaxy",url:"https://galaxy.ansible.com",note:"Roles and collections hub — check ratings and pin versions from here."},
+{type:"video",title:"Learn Linux TV — YouTube (Ansible series)",url:"https://www.youtube.com/@LearnLinuxTV",note:"Full Ansible series from inventory to roles — very interview-aligned."},
+{type:"video",title:"KodeKloud — Ansible Training",url:"https://kodekloud.com",note:"Hands-on Ansible labs for the CKA-adjacent / automation cert path."}
+]},
+{id:"git",num:"07",title:"Git",desc:"Merge vs rebase, reset vs revert, reflog, bisect and branching models.",intro:"Git interviews for senior roles are about safe collaboration: protecting shared history, recovering from mistakes without panic, and choosing a branching model the whole team can live with.",questions:[
+{q:"How is Git's distributed model different from centralized systems like SVN, and what are Git's three areas (working tree, index, repository)?",a:`<p>In SVN, the server holds the canonical history and clients hold a working copy — commits, history and branching need the server. In Git every clone is a full repository with complete history: commit, branch, log and diff work offline, and the "remote" is a convention, not a requirement.</p><p>Three areas: <b>working tree</b> (files on disk) → <b>index / staging area</b> (<code>git add</code> builds the next commit precisely) → <b>repository</b> (<code>.git</code> object store after <code>git commit</code>). The index is the key difference — it lets you craft commits from parts of files (<code>git add -p</code>).</p>`},
+{q:"Merge vs rebase — when do you use each, and why is rebasing shared branches dangerous?",a:`<p><b>Merge</b> joins branches with a merge commit, preserving true history — safe everywhere, history can get noisy. <b>Rebase</b> replays your commits onto a new base, giving a linear history — ideal for cleaning up a <i>private</i> feature branch before merging (<code>git rebase -i main</code>).</p><p>Rebasing rewrites commit hashes. If others have based work on the original commits, a force-push creates divergent histories and painful recoveries. Golden rule: <b>never rebase commits that exist outside your local repo</b> (never rebase <code>main</code>). Prefer <code>--force-with-lease</code> when you must force-push your own branch.</p>`},
+{q:"Walk through resolving a merge conflict.",a:`<pre><code>git merge feature        # CONFLICT reported
+git status               # files marked "both modified"
+# Edit file: choose between &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD, =======, &gt;&gt;&gt;&gt;&gt;&gt;&gt; feature
+git diff --check
+git add resolved-file
+git merge --continue     # or git rebase --continue during rebase
+# Bail out safely at any point: git merge --abort</code></pre><p>Senior points: understand <i>why</i> both sides changed (read <code>git log --merge -p</code>), use <code>git checkout --ours/--theirs</code> only when wholesale choice is correct, run tests before continuing, and consider <code>git mergetool</code> / <code>rerere</code> for repeated conflicts.</p>`},
+{q:"revert vs reset — and soft vs mixed vs hard reset.",a:`<p><b>revert</b> creates a new commit that undoes a previous commit — history is preserved, so it's the safe choice on shared branches. <b>reset</b> moves HEAD (and optionally index/worktree) backwards, rewriting history — for local cleanup only.</p><pre><code>git revert HEAD              # safe, shared
+git reset --soft HEAD~1      # undo commit, keep changes staged
+git reset --mixed HEAD~1     # default: keep changes unstaged
+git reset --hard HEAD~1      # discard commit AND changes — destructive</code></pre><p>Rule interviewers want: pushed and shared → revert; local and private → reset.</p>`},
+{q:"Compare Git Flow, GitHub Flow, and trunk-based development.",a:`<p><b>Git Flow</b> — long-lived <code>main</code> + <code>develop</code>, plus feature/release/hotfix branches; structured but heavy, suits versioned software with scheduled releases. <b>GitHub Flow</b> — branch from <code>main</code>, PR, merge, deploy; simple, suits continuously deployed web services. <b>Trunk-based</b> — everyone integrates to trunk at least daily, short-lived branches (hours), feature flags hide unfinished work; requires strong CI and is the model behind most high-performing platform teams.</p><p>Senior answer frames it as a release-cadence and CI-maturity choice, not fashion.</p>`},
+{q:"How do you recover a lost commit with reflog?",a:`<p>The reflog records every movement of HEAD (commits, resets, rebases, checkouts) for ~90 days by default — "lost" commits are usually still in the object store.</p><pre><code>git reflog               # find the hash, e.g. HEAD@{2}
+git show &lt;hash&gt;          # verify it's the right commit
+git branch recovery &lt;hash&gt;   # or: git cherry-pick &lt;hash&gt;
+# Orphaned commits without reflog entry:
+git fsck --lost-found</code></pre><p>Key reassurance: <code>reset --hard</code> and bad rebases are recoverable via reflog as long as you act before garbage collection prunes unreachable objects.</p>`},
+{q:"What is git stash, and when is it the wrong tool?",a:`<p><code>git stash</code> shelves uncommitted changes (tracked files by default) so you can switch context with a clean tree, then <code>git stash pop/apply</code> to restore. Useful variants: <code>stash -u</code> (include untracked), <code>stash push -m "wip: auth"</code>, <code>stash list / show -p</code>.</p><p>Wrong tool when: the work will live more than a few hours (stashes are invisible, unshared and easy to forget/conflict — commit to a WIP branch instead), when you need to share the state, or as a substitute for committing before a risky operation (a branch + commit is safer and recoverable via reflog).</p>`},
+{q:"Tags vs branches, and what is an annotated tag?",a:`<p>A <b>branch</b> is a movable pointer that advances with each commit — for ongoing work. A <b>tag</b> is a fixed pointer to one commit — for marking releases (<code>v1.4.2</code>) and never moves.</p><p>A <b>lightweight tag</b> is just the pointer. An <b>annotated tag</b> (<code>git tag -a v1.4.2 -m "..."</code>) is a full object with tagger, date, message and optional GPG signature — the correct choice for releases because it's verifiable and carries release metadata. Push with <code>git push origin v1.4.2</code> / <code>--follow-tags</code>.</p>`},
+{q:"How do you squash commits with interactive rebase, and what do you check before force-pushing?",a:`<pre><code>git rebase -i HEAD~4     # or git rebase -i main
+# In the todo list: keep first as 'pick', mark rest 'squash' (s) or 'fixup' (f)
+# Edit the combined message, save, verify:
+git log --oneline; git diff main --stat</code></pre><p>Before force-pushing check: (1) branch is yours / not shared or protected, (2) you're rebasing the right range, (3) tests pass on the rewritten history, (4) use <code>git push --force-with-lease</code> (refuses if someone else pushed since your fetch) — never plain <code>--force</code> on a team branch.</p>`},
+{q:"How does git bisect find the commit that introduced a bug?",a:`<p><code>bisect</code> binary-searches history: you mark a known-good and known-bad commit, Git checks out midpoints, you test and mark each <code>good</code>/<code>bad</code> — ~log₂(N) tests to find the first bad commit.</p><pre><code>git bisect start
+git bisect bad HEAD
+git bisect good v1.2.0
+# test... git bisect good|bad  (repeat)
+git bisect reset
+# Automated: git bisect run ./test-script.sh</code></pre><p><code>bisect run</code> with a script whose exit code signals pass/fail fully automates it — the senior flourish for CI regressions.</p>`},
+{q:"Submodules vs subtrees — trade-offs.",a:`<p><b>Submodules</b> reference another repo at a pinned commit (a pointer, not a copy): clean separation and version pinning, but a famously sharp UX — clones need <code>--recurse-submodules</code>, updates are manual commits, and detached-HEAD confusion is common.</p><p><b>Subtrees</b> copy the dependency's files (and optionally history) into your repo: clones just work and changes are normal commits, at the cost of a heavier repo and more manual syncing (<code>git subtree pull/push</code>). Rule of thumb: submodules for tightly versioned external deps you never edit; subtrees (or a package manager / monorepo) when the team keeps tripping over submodule workflow.</p>`},
+{q:"What are Git hooks used for in a team/CI context?",a:`<p>Hooks are scripts Git runs at lifecycle points. Client-side: <code>pre-commit</code> (lint, fmt, secret scanning — e.g. via pre-commit framework / gitleaks), <code>commit-msg</code> (enforce Conventional Commits), <code>pre-push</code> (run tests). Server-side: <code>pre-receive</code> (reject non-fast-forwards, enforce signed commits, block secrets), <code>post-receive</code> (trigger CI/notifications).</p><p>Senior caveat: client hooks live in <code>.git/hooks</code> and aren't versioned or enforceable — treat them as fast feedback, and enforce what matters server-side / in CI and branch protection.</p>`}
+],refs:[
+{type:"web",title:"Git Documentation & Pro Git Book",url:"https://git-scm.com/doc",note:"Official docs plus the full Pro Git book free online — the definitive reference."},
+{type:"web",title:"Learn Git Branching",url:"https://learngitbranching.js.org",note:"Interactive visual tutorial — the fastest way to internalise rebase and cherry-pick."},
+{type:"video",title:"freeCodeCamp — YouTube (Git & GitHub course)",url:"https://www.youtube.com/@freecodecamp",note:"Full-length Git course covering branching models and recovery workflows."},
+{type:"video",title:"Git — Official Talks on YouTube",url:"https://www.youtube.com/results?search_query=git+internals+talk",note:"Search result for Git internals talks — use for object-model depth, not a single guessed video."}
+]}
+);
+</script>
+<script>
+SUBJECTS.push(
+{id:"openshift",num:"08",title:"OpenShift",desc:"Routes, SCCs, Operators, S2I, OVN-Kubernetes and GitOps.",intro:"OpenShift interviews test what Red Hat adds around Kubernetes — opinionated security, builds, networking and day-2 operations. Frame answers as 'upstream K8s does X, OpenShift adds Y, and that matters because Z.'",questions:[
+{q:"What does OpenShift add on top of upstream Kubernetes?",a:`<p>OpenShift is a Kubernetes distribution with an integrated platform: a hardened install (RHCOS, Machine Config Operator), an integrated image registry + ImageStreams, <b>Routes</b> for ingress, <b>Source-to-Image builds</b>, stricter default security (SCCs, non-root by default), <b>Operators/OLM</b> for lifecycle management, a developer/web console, and built-in observability (Prometheus/Grafana/logging) — all supported as one product with a predictable upgrade path.</p><p>The senior framing: Kubernetes gives you primitives; OpenShift gives you an opinionated, enterprise-supported platform so teams don't assemble those 10 subsystems themselves.</p>`},
+{q:"Routes vs Ingress — how does OpenShift expose applications?",a:`<p>A <b>Route</b> is OpenShift's original (pre-Ingress) resource that exposes a Service via a hostname through the built-in HAProxy-based router, with TLS options (edge, passthrough, re-encrypt), wildcard policies and traffic splitting by backend weights.</p><pre><code>oc expose service app --hostname=app.example.com
+oc create route edge --service=app --cert=tls.crt --key=tls.key</code></pre><p>OpenShift also fully supports standard <b>Ingress</b> (the router implements it). Choose Routes for OpenShift-specific TLS/traffic features, Ingress for portable manifests; Gateway API is the forward path in newer OCP.</p>`},
+{q:"What are SecurityContextConstraints, and how do they differ from Kubernetes Pod Security Standards?",a:`<p><b>SCCs</b> are OpenShift's admission-time policy objects controlling what a pod may do: run as root / specific UID ranges, capabilities, host access (hostNetwork/hostPID/volumes), SELinux contexts. Pods get the SCC matching their ServiceAccount; the default <code>restricted</code> SCC forces an allocated UID range and drops capabilities — which is why images assuming root fail on OpenShift.</p><p><b>Pod Security Standards</b> (Privileged/Baseline/Restricted) are upstream profiles enforced via Pod Security Admission labels on namespaces. OpenShift 4.11+ synchronises SCC behaviour with PSA — SCCs remain the OpenShift-native, more granular mechanism.</p>`},
+{q:"What is an Operator, and how do OperatorHub and OLM manage them?",a:`<p>An <b>Operator</b> encodes human operational knowledge for a complex app (install, upgrade, backup, failover) in a controller watching Custom Resources — e.g. you declare a <code>PostgreSQL</code> CR and the Operator provisions and manages it.</p><p><b>OperatorHub</b> is the catalog of Operators available in the cluster. <b>OLM (Operator Lifecycle Manager)</b> installs them, manages their dependencies, subscriptions (channels) and upgrades, and controls their permissions via install modes (cluster-wide vs namespace). Senior point: evaluate Operators by maturity (capability level), upgrade history and support — an abandoned Operator is a liability.</p>`},
+{q:"Explain Source-to-Image (S2I), BuildConfigs, and ImageStreams.",a:`<p><b>S2I</b> builds a runnable image by injecting application source into a builder image (e.g. Python, Node) using its assemble/run scripts — no Dockerfile required. A <b>BuildConfig</b> defines the build strategy (S2I, Dockerfile, custom), source (Git webhook/context) and output. An <b>ImageStream</b> is an abstraction over image tags in the internal/external registries that decouples consumers from exact digests and can <i>trigger</i> new builds/deployments when a base or app image changes.</p><pre><code>oc new-app python~https://github.com/org/app.git
+oc start-build app --follow</code></pre>`},
+{q:"Projects vs Kubernetes namespaces — what extra does a project carry?",a:`<p>A <b>project</b> is a Kubernetes namespace plus OpenShift metadata: a display name/description, project-scoped RBAC defaults (admin/edit/view roles), and admission defaults like SCC UID-range annotations and network isolation defaults. Self-service project creation is governed by templates and quotas (<code>oc new-project</code>).</p><p>Practically: every project <i>is</i> a namespace (visible via <code>kubectl get ns</code>), but creating a namespace with kubectl bypasses project provisioning rules — in governed clusters users request projects, platform teams template them.</p>`},
+{q:"How does OpenShift networking work with OVNKubernetes, and how do network policies fit in?",a:`<p><b>OVN-Kubernetes</b> is the default CNI (replacing OpenShift SDN): it builds an OVN overlay (Geneve) providing pod networking, Services (OVN load balancing), egress IPs/firewall, and NetworkPolicy enforcement. Each node runs <code>ovnkube-node</code>; control components run on masters.</p><p><b>NetworkPolicies</b> are standard Kubernetes objects — with OVN they are fully enforced (the old SDN required multitenant mode for isolation). Also mention <code>AdminNetworkPolicy</code> / egress network policies for cluster-level controls, and that joining/secondary networks come via Multus.</p>`},
+{q:"DeploymentConfigs vs Deployments — legacy differences and what to use now.",a:`<p><b>DeploymentConfig</b> is OpenShift's original workload API with built-in triggers (image-change, config-change), lifecycle hooks and automatic rollback — features Deployments initially lacked. <b>Deployment</b> is the upstream Kubernetes API.</p><p>Current guidance: use <b>Deployments</b> for all new workloads — they are portable, better supported by Helm/GitOps tooling, and DeploymentConfig is effectively legacy (still supported, but Red Hat steers new work away). Image-change triggering for Deployments is handled via ImageStream annotations / Argo CD image updater patterns.</p>`},
+{q:"What does the Machine Config Operator do, and what is RHCOS?",a:`<p><b>RHCOS (Red Hat Enterprise Linux CoreOS)</b> is the immutable, container-optimised host OS for OpenShift nodes — minimal, image-based, updated atomically with the cluster, not package-by-package. You don't SSH in and <code>dnf install</code>; you configure the OS declaratively.</p><p>The <b>Machine Config Operator (MCO)</b> renders and applies that host configuration (kernel args, files, systemd units, kubelet config) from <code>MachineConfig</code> objects, rolling nodes safely one at a time and reporting degraded pools. Day-2 host changes go through MCO, never manual edits — manual changes are drift the MCO will flag/revert.</p>`},
+{q:"What observability is built into OpenShift (Prometheus, Alertmanager, Grafana, logging)?",a:`<p>Cluster monitoring ships a supported <b>Prometheus + Alertmanager + Grafana</b> stack (Cluster Monitoring Operator) scraping platform components with prebuilt dashboards and alerting rules; <b>User Workload Monitoring</b> extends it to app metrics via <code>ServiceMonitor</code>/<code>PodMonitor</code>.</p><p>Logging is provided by the Loki-based (formerly Elasticsearch) <b>OpenShift Logging</b> operator with Vector/Fluentd collectors forwarding app/infrastructure/audit logs. All of it is installed and upgraded as Operators — the senior point is you get a supported baseline day one and integrate (not replace) with enterprise Splunk/Datadog via forwarders/exporters.</p>`},
+{q:"How does OpenShift GitOps (Argo CD) fit a deployment workflow?",a:`<p><b>OpenShift GitOps</b> is Red Hat's supported distribution of <b>Argo CD</b>. Workflow: app manifests/Helm/Kustomize live in Git; Argo CD continuously reconciles cluster state to Git (detecting drift and optionally self-healing), with sync policies, health assessment and RBAC/SSO integrated with OpenShift.</p><p>Typical layout: one Argo CD instance per cluster (or a managed fleet pattern with ApplicationSets), repo → dev auto-sync, prod manual/PR-gated sync. It replaces imperative <code>oc apply</code> from CI — CI builds and updates Git; GitOps deploys.</p>`},
+{q:"How does the integrated image registry work, and how are image policies enforced?",a:`<p>OpenShift includes a built-in registry (<code>image-registry.openshift-image-registry.svc</code>) storing images pushed by builds, exposed externally via a Route when needed. ImageStreams in each project reference these images, and builds/deployments pull via internal service DNS with project-scoped pull permissions.</p><p>Policy enforcement: <code>ImagePolicy</code> / cluster image policies (and admission via Sigstore policy in newer versions) can restrict which external registries and signatures are allowed, image pruner jobs reclaim storage, and SCC/image defaults block running as root. External enterprise registries (Quay, Artifactory, ACR/ECR) integrate via pull secrets.</p>`}
+],refs:[
+{type:"web",title:"OpenShift Documentation",url:"https://docs.openshift.com",note:"Official OpenShift Container Platform docs for the version you run."},
+{type:"web",title:"Red Hat Developers — OpenShift Learning Paths",url:"https://developers.redhat.com/learn/openshift",note:"Free hands-on learning paths and a no-cost Developer Sandbox."},
+{type:"video",title:"Red Hat — YouTube (OpenShift playlists)",url:"https://www.youtube.com/@RedHat",note:"Official OpenShift demos, Ask Noah / streams and deep-dives."},
+{type:"video",title:"KodeKloud — OpenShift Training",url:"https://kodekloud.com",note:"Lab-based OpenShift course for EX288-style preparation."}
+]},
+{id:"jenkins",num:"09",title:"Jenkins",desc:"Pipelines, shared libraries, credentials, agents and JCasC.",intro:"Senior Jenkins questions are about operating Jenkins as production infrastructure: ephemeral agents, pipelines as code, credential hygiene, and not letting the controller become a single point of chaos.",questions:[
+{q:"Describe Jenkins architecture — controller vs agents, and why the controller should run zero executors.",a:`<p>The <b>controller</b> (formerly master) orchestrates: UI, job config, scheduling, pipeline logic (especially CPS/Groovy execution), credentials and plugins — state in <code>JENKINS_HOME</code>. <b>Agents</b> do the actual build work (checkout, compile, test) and report results.</p><p>Set controller executors to <b>0</b> because builds run arbitrary code: running them on the controller risks resource starvation, credential exposure and compromise of Jenkins itself. Scale and isolate on agents (static, or ephemeral cloud/K8s agents per build), and label agents so jobs land on the right toolchains.</p>`},
+{q:"Declarative vs scripted pipelines, and the anatomy of a Jenkinsfile.",a:`<p><b>Scripted</b> is raw Groovy in a <code>node { }</code> block — maximally flexible, easy to abuse. <b>Declarative</b> is a structured DSL with validation and consistent syntax — the default choice for teams:</p><pre><code>pipeline {
+  agent any
+  options { timeout(time: 30, unit: 'MINUTES') }
+  environment { APP = 'billing' }
+  stages {
+    stage('Build') { steps { sh 'make build' } }
+    stage('Test')  { steps { sh 'make test' } }
+  }
+  post { always { junit 'reports/*.xml' } }
+}</code></pre><p>Anatomy: <code>pipeline → agent / stages → stage → steps</code>, plus <code>parameters, triggers, environment, post</code>.</p>`},
+{q:"How do stages, parallel branches, and post conditions work in a pipeline?",a:`<p>Stages run sequentially and visualise progress; a failed step fails its stage and (by default) the build. <b>Parallel</b> runs branches concurrently — for test matrices or multi-platform builds — with <code>failFast true</code> to abort siblings on first failure:</p><pre><code>stage('Test') {
+  parallel {
+    stage('Unit')  { steps { sh 'make unit' } }
+    stage('Lint')  { steps { sh 'make lint' } }
+  }
+}</code></pre><p><code>post</code> blocks run on conditions — <code>always, success, failure, unstable, changed, cleanup</code> — for notifications, artefact cleanup and test reporting regardless of outcome.</p>`},
+{q:"What are shared libraries, and how do they reduce pipeline duplication?",a:`<p>A shared library is versioned Groovy code in its own Git repo, loaded via <code>@Library('my-lib@main') _</code>, providing reusable steps (<code>vars/</code> — e.g. <code>buildDockerImage(...)</code>), classes (<code>src/</code>) and resources (<code>resources/</code>).</p><p>Platform teams publish standard pipeline building blocks (build, scan, deploy, notify) once; hundreds of Jenkinsfiles become thin declarations. Version libraries (tags/branches), configure them globally or per-folder, and treat library changes like production code — tested and reviewed.</p>`},
+{q:"How should credentials be stored and used in Jenkins pipelines?",a:`<p>Store secrets in the <b>Jenkins Credentials store</b> (or better, an external provider — Vault, cloud secret managers via plugins) scoped as narrowly as possible (folder/system). Bind them at runtime, never hardcode or echo them:</p><pre><code>withCredentials([usernamePassword(credentialsId: 'docker-hub',
+    usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
+  sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
+}</code></pre><p>Jenkins masks bound values in logs, but masking is best-effort — avoid printing secrets, prefer short-lived tokens/OIDC, and audit credential usage.</p>`},
+{q:"Freestyle jobs vs pipeline jobs — when does freestyle still make sense?",a:`<p><b>Freestyle</b> jobs are UI-configured (point-and-click build steps) — quick for a trivial cron/script job, but configuration lives only in Jenkins (not versioned, not reviewable, hard to replicate). <b>Pipeline</b> jobs define the workflow as code in a Jenkinsfile in SCM: reviewable, durable (survives controller restarts mid-build), and supports complex logic/approvals.</p><p>Senior line: freestyle is acceptable for throwaway/ops one-offs; anything a team depends on belongs in a pipeline. Migrate by wrapping freestyle steps in a Jenkinsfile incrementally.</p>`},
+{q:"How do you trigger builds — webhooks, SCM polling, scheduled triggers — and which is preferred?",a:`<p><b>Webhooks</b> (preferred): the SCM (GitHub/GitLab) notifies Jenkins instantly on push/PR — low latency, no wasted polls, via the GitHub Branch Source / webhook trigger. <b>SCM polling</b> (<code>pollSCM('H/5 * * * *')</code>) periodically checks for changes — fallback when webhooks can't reach Jenkins. <b>Scheduled</b> (<code>cron(...)</code> in <code>triggers</code>) for nightly/release jobs regardless of changes.</p><p>Use hashed cron syntax (<code>H</code>) to spread load. Webhooks + multibranch pipelines (auto-discovering branches/PRs) is the modern default architecture.</p>`},
+{q:"How are build artifacts handled, and why push them to an artifact repository (Nexus/Artifactory) instead of keeping them in Jenkins?",a:`<p>Jenkins can <code>archiveArtifacts</code> and fingerprint files, which is fine for small reports/test results. But Jenkins is a CI orchestrator, not a repository: artefact storage there has no proper versioning, retention, promotion, vulnerability scanning or cross-tool distribution, and it bloats <code>JENKINS_HOME</code> backups.</p><p>Publish versioned artefacts (jars, images, Helm charts) to <b>Nexus/Artifactory / a container registry</b> from the pipeline, record the version/digest in the build, and deploy <i>from the repository</i> — Jenkins keeps only metadata and logs.</p>`},
+{q:"How do ephemeral Kubernetes-based agents work with Jenkins?",a:`<p>The Kubernetes plugin provisions a pod as an agent per build: the controller creates a pod from a <b>pod template</b> (JNLP inbound-agent container + sidecar tool containers — Maven, Node, Docker/Buildah), the build runs steps in those containers (<code>container('maven') { sh 'mvn verify' }</code>), and the pod is deleted when the build ends.</p><p>Benefits: clean environment every build, elastic scaling, no snowflake static agents, toolchain isolation by image. Costs: cold-start time and image management — mitigated with pre-pulled/cached images and node pools.</p>`},
+{q:"How do you secure Jenkins — authorization strategies, CSRF protection, agent-to-controller security?",a:`<p>Baseline: integrate SSO/LDAP/OIDC, use <b>Matrix Authorization</b> or Role-Based Strategy for least privilege (never "logged-in users can do anything" in production), enable <b>CSRF protection</b> (crumb issuer) and strict agent protocols.</p><p><b>Agent-to-controller security</b> is the subtle part: agents can send data back to the controller, so enable the built-in protections (remoting security, controller isolation for untrusted agents — e.g. run untrusted builds on separate agents/clouds), keep plugins minimal and patched, disable CLI/legacy protocols you don't need, and protect <code>JENKINS_HOME</code> and the credentials store with backups + restricted filesystem access.</p>`},
+{q:"How do you back up and restore Jenkins (JENKINS_HOME, plugins, CasC)?",a:`<p>Almost everything lives in <code>JENKINS_HOME</code>: <code>config.xml</code>, job configs, credentials (<code>credentials.xml</code> + <code>secrets/</code> — losing <code>secrets/</code> makes credentials unrecoverable), users, and plugin files. Back up <code>JENKINS_HOME</code> (thinBackup or filesystem snapshots, excluding bulky build workspaces where possible) and test restores.</p><p>Modern approach: don't rely on backup alone — define controller config with <b>JCasC</b> and pin plugins in a versioned image/manifest, so a controller is rebuilt from code and only secrets/history need restoring.</p>`},
+{q:"What is Jenkins Configuration as Code (JCasC), and what problem does it solve?",a:`<p>JCasC defines the controller's configuration (security realm, credentials references, clouds/agents, shared libraries, system settings) in a versioned YAML file applied at startup, instead of clicking through the UI:</p><pre><code>jenkins:
+  systemMessage: "Managed by JCasC"
+  numExecutors: 0
+security:
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: true</code></pre><p>It solves configuration drift and unreproducible controllers: Jenkins becomes cattle — reviewable in Git, rebuilt identically in DR or a new cluster, with secrets injected from external stores rather than stored in YAML.</p>`}
+],refs:[
+{type:"web",title:"Jenkins Documentation",url:"https://www.jenkins.io/doc/",note:"Official handbook — pipeline syntax and administration references."},
+{type:"web",title:"Jenkins Plugins Index",url:"https://plugins.jenkins.io",note:"Check plugin health, versions and security advisories before installing."},
+{type:"video",title:"TechWorld with Nana — YouTube (Jenkins series)",url:"https://www.youtube.com/@TechWorldwithNana",note:"Jenkins pipeline series from Jenkinsfile basics to Kubernetes agents."},
+{type:"video",title:"KodeKloud — Jenkins Training",url:"https://kodekloud.com",note:"Hands-on Jenkins labs covering pipelines and administration."}
+]},
+{id:"azure",num:"10",title:"Microsoft Azure",desc:"Hierarchy, VNets, Entra ID, AKS, storage tiers and cost control.",intro:"Azure interviews for a senior with an Azure background go deep on governance and networking design. Lead with hierarchy + policy + identity — that's how Azure estates stay sane at scale — then compute and cost.",questions:[
+{q:"Explain Azure's hierarchy: management groups, subscriptions, resource groups — and regions vs availability zones.",a:`<p>Hierarchy: <b>Management Groups</b> (governance containers) → <b>Subscriptions</b> (billing + hard boundary for quotas/access) → <b>Resource Groups</b> (lifecycle containers for related resources — resources can span RGs/regions, an RG lives in one region for metadata). Azure Policy and RBAC inherit down this tree, so design it before you build.</p><p>A <b>Region</b> is a geography with multiple datacentres. <b>Availability Zones</b> are physically separate DCs <i>within</i> a region (independent power/network) for high availability without cross-region latency; not all regions/services support zones — pair regions for DR.</p>`},
+{q:"Azure Virtual Machines: managed disks, availability sets vs availability zones.",a:`<p><b>Managed Disks</b> are the default storage for VMs (Standard HDD → Standard SSD → Premium SSD → Ultra Disk) — Azure manages durability/replication; unmanaged disks (manual storage accounts) are legacy. Snapshot/backup via Azure Backup, encryption at rest by default (platform or customer-managed keys).</p><p><b>Availability Sets</b> protect against rack-level failure within one DC via fault domains (hardware) + update domains (host patching) — legacy mechanism. <b>Availability Zones</b> are the modern default: place VMs/VMSS across zones for DC-level resilience. Prefer zones + VM Scale Sets for new HA designs.</p>`},
+{q:"Design a VNet: subnets, network security groups, Azure Firewall, and VNet peering.",a:`<p>Plan address space first (non-overlapping with on-prem/peers). Carve subnets by function (app, data, AKS, Azure Firewall, GatewaySubnet, AzureBastionSubnet — some have mandated names/sizes). <b>NSGs</b> filter traffic at subnet/NIC level (stateful, 5-tuple rules) — associate deliberately and log flows.</p><p>Hub-and-spoke is the reference design: shared services + <b>Azure Firewall</b> (centralised L3–L7 filtering, FQDN rules) in the hub, workload VNets as spokes, connected by <b>VNet peering</b> (non-transitive — spokes can't talk via the hub without routing/UDRs through the firewall). Force egress via UDRs (<code>0.0.0.0/0 → firewall</code>).</p>`},
+{q:"Microsoft Entra ID (Azure AD): RBAC roles, and what is a managed identity?",a:`<p><b>Entra ID</b> is Azure's identity platform. Authorisation uses <b>Azure RBAC</b>: security principal + role definition (Owner, Contributor, Reader, plus granular built-ins/custom) + scope (management group → subscription → RG → resource, inherited). Deny assignments are rare/system-managed; effect comes from allow + inheritance, so scope assignments as low as possible.</p><p>A <b>Managed Identity</b> is an Entra identity Azure provisions for a resource (system-assigned = tied to that resource; user-assigned = reusable) so it can get tokens and call Azure APIs (Key Vault, Storage) with <b>no credentials in code</b>. This is the correct answer to "how does your app read Key Vault secrets?"</p>`},
+{q:"Azure Storage: blob tiers and redundancy options (LRS, ZRS, GRS) — when does each fit?",a:`<p>Blob access tiers: <b>Hot</b> (frequent access), <b>Cool</b> (infrequent, ≥30 days), <b>Cold</b> (≥90 days), <b>Archive</b> (offline, ≥180 days, rehydration takes hours) — storage gets cheaper, access/early-deletion costs rise. Manage with lifecycle policies.</p><p>Redundancy: <b>LRS</b> — 3 copies in one DC (cheapest, dev/test). <b>ZRS</b> — synchronous copies across zones in a region (HA default). <b>GRS / GZRS</b> — plus async copy to a paired region (DR; RA-GRS adds read access to secondary). Choose by RPO/regulatory need — GRS doubles cost, so don't default everything to it.</p>`},
+{q:"AKS vs running Kubernetes yourself on Azure VMs — what does AKS manage for you?",a:`<p>With <b>AKS</b>, Azure manages the control plane (API server, etcd) at no charge — you pay for nodes — plus managed upgrades, node image patching options, integrated Entra ID auth, Azure CNI networking, and managed add-ons (Key Vault CSI, Azure Policy, monitoring). You manage node pools, workload config, and shared-responsibility security.</p><p>Self-managed K8s on VMs gives full control (custom control plane, exotic versions) at the cost of owning etcd HA, upgrades, and control-plane security. Senior default: AKS unless a specific constraint (version, networking, compliance edge case) forces self-managed.</p>`},
+{q:"Azure Load Balancer vs Application Gateway vs Front Door — how do you choose?",a:`<p><b>Azure Load Balancer</b> — L4 (TCP/UDP), regional, ultra-low latency, for any protocol. <b>Application Gateway</b> — L7 regional reverse proxy with WAF, path/host routing, TLS termination — for HTTP(S) apps in one region (often fronting AKS ingress). <b>Front Door</b> — global L7: anycast entry, global load balancing/failover across regions, WAF + CDN caching at the edge.</p><p>Decision: non-HTTP or L4 → Load Balancer; regional web → App Gateway; multi-region / global users → Front Door (often Front Door → App Gateway → ingress in layered designs).</p>`},
+{q:"ARM templates vs Bicep vs Terraform for Azure — trade-offs.",a:`<p><b>ARM templates</b> (JSON) are the native deployment language — complete and immediate for new Azure features, but verbose and hard to read. <b>Bicep</b> compiles to ARM with a concise, modular, Azure-native DSL and day-one feature support — the best choice for Azure-only estates. <b>Terraform</b> is cloud-agnostic with a mature module ecosystem and state model, at the cost of occasional lag on brand-new Azure features and provider quirks.</p><p>Senior framing: standardise on one per estate boundary — Bicep for Azure-only platform teams, Terraform for multi-cloud — and don't mix them on the same resources.</p>`},
+{q:"Azure Monitor, Log Analytics, and Application Insights — what does each cover?",a:`<p><b>Azure Monitor</b> is the umbrella platform for metrics and logs, alerting and autoscale. <b>Log Analytics</b> is the log store/query engine (KQL) behind it — VM/container insights and diagnostics land in a Log Analytics workspace. <b>Application Insights</b> is APM for your code: requests, dependencies, exceptions, distributed tracing (now built on Azure Monitor / OpenTelemetry).</p><p>One-liner: metrics + alerts = Monitor, infrastructure log queries = Log Analytics (KQL), application performance/traces = App Insights. Container Insights is Monitor specialised for AKS.</p>`},
+{q:"Azure Policy and tagging for governance — how do you enforce standards at scale?",a:`<p><b>Azure Policy</b> evaluates resource properties against rules with effects like <code>Deny</code>, <code>Audit</code>, <code>DeployIfNotExists</code>, <code>Modify</code> — e.g. deny public IPs, require encryption, auto-add diagnostics. Assign policies (grouped as <i>initiatives</i>, e.g. CIS benchmark) at management-group scope so every subscription inherits them.</p><p><b>Tagging</b> (owner, cost-centre, environment) is enforced via policy (<code>Require a tag</code> / inherit-tag policies) — tags drive cost allocation, automation and lifecycle, so they must be policy-enforced, not a wiki convention. Pair with Azure Blueprints successor patterns / landing zones (ALZ) for the full governance baseline.</p>`},
+{q:"Azure Backup and Azure Site Recovery — difference between backup and DR.",a:`<p><b>Azure Backup</b> protects data: point-in-time restore of VMs, files, SQL/SAP, blobs into a Recovery Services vault with retention policies — it answers "we deleted/corrupted data, get yesterday's copy". RPO is backup frequency (hours).</p><p><b>Azure Site Recovery (ASR)</b> replicates running VMs (or physical servers) to another region for <i>disaster recovery</i>: fail over the whole workload with RPO in minutes and tested failover plans. Backup ≠ DR: backup has no compute orchestration or rapid regional failover; ASR is not a substitute for long-term retention. Mature designs use both.</p>`},
+{q:"How do you control Azure costs — reservations, savings plans, budgets and alerts?",a:`<p>Layers: <b>visibility</b> — Cost Management + enforced tags, budgets with alert thresholds (50/80/100% + forecast) per subscription/RG, and alerts to owners, not just finance. <b>Commitment discounts</b> — <b>Reserved Instances</b> (1/3-year, specific VM family/region, up to ~72% saving) and <b>Azure Savings Plans</b> (commit to $/hour of compute, more flexible across families/regions). <b>Hygiene</b> — rightsizing (Advisor recommendations), Azure Hybrid Benefit for licensed Windows/SQL, auto-shutdown for dev, lifecycle-tiering storage.</p><p>Senior point: reservations/savings plans come <i>after</i> rightsizing — committing to waste is still waste.</p>`}
+],refs:[
+{type:"web",title:"Microsoft Learn — Azure Documentation",url:"https://learn.microsoft.com/azure",note:"Official Azure docs and free Learn modules — the primary Azure reference."},
+{type:"web",title:"Azure Architecture Center",url:"https://learn.microsoft.com/azure/architecture",note:"Reference architectures and design patterns — cite these for design questions."},
+{type:"video",title:"John Savill's Technical Training — YouTube (Azure series)",url:"https://www.youtube.com/@NTFAQGuy",note:"The most respected free Azure deep-dive channel — AZ-104/AZ-305 aligned."},
+{type:"video",title:"Microsoft Azure — Official YouTube Channel",url:"https://www.youtube.com/@MicrosoftAzure",note:"Product announcements, Azure Friday and architecture sessions."}
+]}
+);
+</script>
+<script>
+SUBJECTS.push(
+{id:"aws",num:"11",title:"AWS",desc:"IAM, VPC, EC2, S3, load balancing, RDS/Aurora, EKS and Route 53.",intro:"AWS interviews reward breadth with judgement: IAM and VPC design first, then the classic service-selection questions (ALB vs NLB, Multi-AZ vs read replica, CloudWatch vs CloudTrail vs Config). Always tie answers back to least privilege and the shared responsibility model.",questions:[
+{q:"IAM deep dive: users, groups, roles, policies — and how instance profiles and least privilege fit together.",a:`<p><b>Users</b> are human/service identities (prefer SSO/federation over long-lived IAM users). <b>Groups</b> collect users for policy attachment (groups can't be principals). <b>Roles</b> are assumable identities with temporary credentials — the mechanism for applications, cross-account access and federation; no permanent keys. <b>Policies</b> are JSON allow/deny documents attached to identities (identity policies) or resources (resource policies); explicit Deny always wins.</p><p>An <b>instance profile</b> is the container that attaches one role to an EC2 instance so code gets temporary credentials via IMDS. Least privilege in practice: start from Access Analyzer / CloudTrail usage, scope policies to specific resources/actions, and use permission boundaries + SCPs as guardrails.</p>`},
+{q:"Design a VPC: public/private subnets, route tables, internet gateway vs NAT gateway.",a:`<p>Choose a non-overlapping CIDR (e.g. <code>/16</code>), create subnets per AZ per tier. <b>Public subnets</b> route <code>0.0.0.0/0 → Internet Gateway (IGW)</code>; instances get public IPs. <b>Private subnets</b> have no IGW route; outbound internet goes via a <b>NAT Gateway</b> (AWS-managed, in a public subnet, per-AZ for HA) for patching/API calls, with no inbound exposure. Data subnets ideally have no internet route at all — use VPC endpoints for AWS services.</p><p>Each subnet associates with one route table; the main table is the fallback. Mention security layering: SGs at ENI, NACLs at subnet, endpoints + PrivateLink to keep AWS traffic off the internet.</p>`},
+{q:"Security groups vs network ACLs — stateful vs stateless and typical usage.",a:`<p><b>Security Groups</b> act at the instance/ENI level, are <b>stateful</b> (return traffic automatically allowed), allow-rules only, and are the primary firewall — reference other SGs as sources for tiered designs (<code>app-sg → db-sg:5432</code>).</p><p><b>Network ACLs</b> act at the subnet level, are <b>stateless</b> (you must allow ephemeral return ports explicitly), support allow <i>and</i> deny rules evaluated by rule number. Typical use: SGs do the real work; NACLs are a coarse second layer (block a known-bad range, guardrail subnet rules). Default NACL allows all — custom NACLs deny all by default.</p>`},
+{q:"EC2 essentials: instance families, EBS vs instance store, AMIs, and user data.",a:`<p>Families: general (M/T), compute-optimised (C), memory-optimised (R/X), accelerated/GPU (P/G), storage-optimised (I/D) — pick by bottleneck profile, use Graviton (ARM) where the stack supports it for price/performance. <b>EBS</b> is network-attached persistent block storage (gp3 default; io2 for high IOPS) surviving instance stop. <b>Instance store</b> is physically attached NVMe — fastest, but <b>ephemeral</b> (lost on stop/terminate); for caches/scratch only.</p><p>An <b>AMI</b> is the boot image template; <b>user data</b> is a script/config executed by cloud-init at first boot for bootstrapping (prefer baking AMIs / using SSM over giant user-data scripts).</p>`},
+{q:"S3: storage classes, versioning, lifecycle policies, and bucket policies vs ACLs.",a:`<p>Classes trade cost for access: <b>S3 Standard → Standard-IA → One Zone-IA → Glacier Instant/Flexible/Deep Archive</b>, plus Intelligent-Tiering when patterns are unknown. <b>Versioning</b> keeps every object version (protects against overwrite/delete; pair with MFA Delete for critical buckets). <b>Lifecycle policies</b> automate transitions and expirations by prefix/tag/age.</p><p>Access control: <b>bucket policies</b> (resource policies, JSON, can grant cross-account and enforce TLS/encryption) are the modern standard; <b>ACLs</b> are legacy canned grants — disable them via Bucket Owner Enforced (Object Ownership) and use policies + IAM. Always enable Block Public Access unless intentionally public.</p>`},
+{q:"ALB vs NLB vs Gateway Load Balancer — how do you choose, and what are target groups and health checks?",a:`<p><b>ALB</b> — L7 HTTP(S): host/path routing, auth, WebSockets/gRPC — for web/API traffic. <b>NLB</b> — L4 TCP/UDP/TLS: ultra-low latency, millions of RPS, static IPs — for non-HTTP, gaming, or when you need source-IP preservation. <b>Gateway LB</b> — inserts third-party virtual appliances (firewalls/IDS) transparently into the traffic path via GENEVE.</p><p>All route to <b>target groups</b> (pools of instances/IPs/containers with a port/protocol) gated by <b>health checks</b> — unhealthy targets stop receiving traffic automatically. Choose by protocol layer first, features second.</p>`},
+{q:"How do Auto Scaling Groups with launch templates work?",a:`<p>An <b>ASG</b> maintains a desired count of identical instances across AZs, replacing unhealthy ones and scaling on policy. A <b>launch template</b> versions the full instance spec (AMI, type, SGs, user data, IAM profile) — templates supersede launch configurations and support mixed instance types/spot.</p><p>Scaling policies: target-tracking (keep CPU/ALB requests-per-target at X — the default choice), step scaling, scheduled, and predictive. Key design points: health checks should include ELB checks (not just EC2), cooldowns/warm pools for slow starters, and instance refresh for rolling AMI updates.</p>`},
+{q:"RDS vs Aurora, and Multi-AZ vs read replicas — which solves HA and which solves scale?",a:`<p><b>RDS</b> is managed vanilla engines (PostgreSQL, MySQL, MariaDB, Oracle, SQL Server) — automated backups, patching, failover. <b>Aurora</b> is AWS's re-engineered MySQL/PostgreSQL-compatible engine: storage auto-scales across AZs (6 copies), faster failover, up to 15 replicas sharing the storage layer — at a premium price.</p><p><b>Multi-AZ</b> solves <b>HA</b>: synchronous standby in another AZ, automatic DNS failover, not readable. <b>Read replicas</b> solve <b>read scale</b>: asynchronous copies you query (with replication lag). They answer different questions — a classic interview trap is proposing replicas for HA.</p>`},
+{q:"CloudWatch vs CloudTrail vs AWS Config — what question does each answer?",a:`<p><b>CloudWatch</b> — "How is it performing?" Metrics, logs, alarms, dashboards for resources and apps. <b>CloudTrail</b> — "Who did what, when?" An audit log of API calls across the account (management + optional data events) — the security/forensics record. <b>AWS Config</b> — "What does it look like, and did it change?" A recorded configuration history of resources with rules evaluating compliance (e.g. "all EBS volumes encrypted").</p><p>Mnemonic: performance = CloudWatch, activity = CloudTrail, state/compliance = Config. Mature accounts enable all three, with CloudTrail + Config feeding Security Hub.</p>`},
+{q:"EKS basics, and what is IRSA (IAM Roles for Service Accounts)?",a:`<p><b>EKS</b> is managed Kubernetes: AWS runs the control plane across AZs; you manage node groups (managed nodes, self-managed, or Fargate profiles) and the usual K8s objects. It integrates with VPC CNI (pods get VPC IPs), ALB via the AWS Load Balancer Controller, and EBS/EFS CSI drivers.</p><p><b>IRSA</b> maps an IAM role to a Kubernetes ServiceAccount via the cluster OIDC provider: pods using that SA receive temporary AWS credentials scoped to that role — per-pod least privilege instead of giving the whole node role broad permissions. (Its successor, EKS Pod Identity, simplifies the same idea.) Never put static AWS keys in pods.</p>`},
+{q:"Route 53 routing policies — latency, weighted, failover.",a:`<p>Route 53 is AWS's authoritative DNS + health checking. Policies: <b>Simple</b> (one record), <b>Weighted</b> (split traffic by % — canary/blue-green), <b>Latency-based</b> (route each user to the lowest-latency region), <b>Failover</b> (primary/secondary driven by health checks — active-passive DR), plus <b>Geolocation / Geoproximity</b> and <b>Multivalue answer</b>.</p><p>Senior nuance: DNS failover is bounded by TTL and resolver caching — set TTLs deliberately before an incident, and pair Route 53 health checks with real synthetic checks, not just port-open tests.</p>`},
+{q:"Explain the AWS shared responsibility model with examples.",a:`<p>AWS secures <b>the cloud</b>: physical facilities, hardware, virtualisation, and the managed-service internals (e.g. S3 durability, RDS patching of the engine host). The customer secures <b>in the cloud</b>: IAM, data classification/encryption choices, OS patching on EC2, security groups, application code, and configuration.</p><p>The boundary moves with the service: on EC2 you patch the guest OS; on RDS AWS patches it but you still own users, parameter groups and backups policy; on S3 AWS runs the storage but a public bucket policy is entirely your fault. Most breaches are customer-side misconfiguration — that's the point interviewers want you to make.</p>`}
+],refs:[
+{type:"web",title:"AWS Documentation",url:"https://docs.aws.amazon.com",note:"Official service docs and the AWS Well-Architected Framework."},
+{type:"web",title:"AWS Skill Builder",url:"https://skillbuilder.aws",note:"Free official training and Cloud Practitioner / Solutions Architect paths."},
+{type:"video",title:"freeCodeCamp — YouTube (AWS courses)",url:"https://www.youtube.com/@freecodecamp",note:"Full AWS certification courses free on YouTube — SAA depth."},
+{type:"video",title:"Stéphane Maarek — AWS Courses (Udemy)",url:"https://www.udemy.com/user/stephane-maarek/",note:"The best-known paid AWS cert courses; check Udemy listing for current titles."}
+]},
+{id:"gcp",num:"12",title:"Google Cloud (GCP)",desc:"Resource hierarchy, global VPC, GKE Autopilot, IAM and BigQuery.",intro:"GCP interviews highlight where Google differs: a global VPC, a strict resource hierarchy with inherited IAM, and opinionated managed services (Autopilot, Cloud Run, BigQuery). Contrast with AWS/Azure explicitly — interviewers listen for that.",questions:[
+{q:"Explain GCP's resource hierarchy (organization, folders, projects) and how IAM policies inherit.",a:`<p>Hierarchy: <b>Organization → Folders → Projects → Resources</b>. The <b>project</b> is the fundamental container — every resource belongs to exactly one project, and billing, APIs and quotas attach there. Folders group projects by department/environment.</p><p>IAM policies set at a higher level <b>inherit downward</b> and are additive (allow policies union; deny policies exist separately) — you cannot remove a parent's grant at a child level. So org/folder grants must be minimal and intentional. Organization Policies add guardrails (e.g. disable external IPs) that also inherit.</p>`},
+{q:"Compute Engine vs GKE vs Cloud Run vs App Engine — how do you choose?",a:`<p><b>Compute Engine</b> — VMs, full OS control (lift-and-shift, licensed/specialised workloads). <b>GKE</b> — managed Kubernetes for containerised microservices needing K8s APIs, custom networking/scheduling. <b>Cloud Run</b> — serverless containers: give it an image, it scales to zero and per-request bills — the default for stateless HTTP services without K8s overhead. <b>App Engine</b> — serverless PaaS for code (standard/flexible), largely superseded by Cloud Run for new work.</p><p>Decision line: need the OS → GCE; need Kubernetes → GKE; need neither → Cloud Run.</p>`},
+{q:"How is a GCP VPC different from AWS/Azure networking (global VPC, regional subnets)?",a:`<p>A GCP <b>VPC is global</b>: one VPC spans all regions, while <b>subnets are regional</b> (each subnet is a CIDR in one region). Resources in different regions on the same VPC communicate over Google's backbone with no peering. Contrast AWS/Azure where a VPC/VNet is regional and multi-region means peering/transit.</p><p>Other distinctions: firewall rules are VPC-level (implied deny ingress / allow egress), routes are global, and Shared VPC lets a host project own networking while service projects consume subnets — the standard enterprise pattern. VPC peering exists but doesn't cross the global-VPC design as often as in AWS.</p>`},
+{q:"GKE Standard vs Autopilot — trade-offs.",a:`<p><b>Standard</b>: you manage node pools (machine types, upgrades, node config) and pay per VM — full control, full responsibility. <b>Autopilot</b>: Google manages nodes entirely; you declare pod resource requests and pay per pod (requests), with hardened defaults (security, autoscaling, no SSH to nodes) enforced.</p><p>Choose Autopilot for most app workloads (less ops, secure by default, cost tied to requests — but requests must be honest). Choose Standard when you need GPUs/TPUs, specific node images, daemonsets with host access, or exotic scheduling. This mirrors AKS vs self-managed reasoning.</p>`},
+{q:"Cloud Storage classes and lifecycle management.",a:`<p>Classes: <b>Standard</b> (hot), <b>Nearline</b> (≥30d, monthly access), <b>Coldline</b> (≥90d, quarterly), <b>Archive</b> (≥365d, yearly) — all with millisecond access (unlike Glacier retrieval delays), priced by storage vs retrieval. Location types (regional / dual-region / multi-region) are a separate durability/availability choice from class.</p><p><b>Lifecycle rules</b> transition or delete objects by age, class, version count or prefix — e.g. logs: Standard → Nearline at 30d → Coldline at 90d → delete at 400d. Pair with versioning + retention policies / Bucket Lock for compliance (WORM) needs.</p>`},
+{q:"GCP load balancing options — global vs regional, external vs internal.",a:`<p>Google's differentiator is true <b>global</b> load balancing: a single anycast IP for the <b>Global External Application LB</b> (L7 HTTP/S) routes users to the nearest healthy region with cross-region failover. <b>Regional External Application LB</b> and <b>Network LBs</b> (passthrough, L4) serve single-region needs; the <b>Internal Application/Network LBs</b> handle private east-west traffic inside the VPC.</p><p>Choose by: L7 vs L4, global vs regional footprint, external vs internal. Cloud CDN attaches to the global L7 LB; GKE exposes these via Gateway/Ingress (GKE Gateway controller).</p>`},
+{q:"IAM in GCP: primitive vs predefined vs custom roles, service accounts, and Workload Identity.",a:`<p><b>Primitive roles</b> (Owner/Editor/Viewer) are legacy broad grants — avoid in production. <b>Predefined roles</b> are Google-maintained, service-scoped (<code>roles/storage.objectViewer</code>) — the default. <b>Custom roles</b> assemble specific permissions when predefined is too broad (with caveats: not all permissions are supportable).</p><p><b>Service accounts</b> are identities for workloads (also usable as resources). <b>Workload Identity</b> lets GKE pods / external workloads (AWS, GitHub Actions via federation) impersonate a service account with short-lived tokens — no downloaded SA keys, which should be disabled by org policy.</p>`},
+{q:"Cloud Monitoring and Cloud Logging (Operations suite) — what do they cover?",a:`<p>The <b>Google Cloud Operations suite</b> (formerly Stackdriver): <b>Cloud Logging</b> — centralised, structured log ingestion with Log Explorer (query), log-based metrics, sinks to BigQuery/Cloud Storage/Pub/Sub, and retention buckets. <b>Cloud Monitoring</b> — metrics, dashboards, uptime checks and alerting policies across GCP and hybrid (via Ops Agent / BindPlane).</p><p>Plus Trace, Error Reporting and Profiler for APM. Platform answer: enable audit logs deliberately (Admin Activity is on by default; Data Access logs cost money), export logs for SIEM, and alert on SLO burn, not raw thresholds alone.</p>`},
+{q:"What is BigQuery, and why do interviewers ask about it for platform roles?",a:`<p><b>BigQuery</b> is Google's serverless, massively parallel data warehouse: columnar storage separated from compute, SQL queries over petabytes with no infrastructure to manage, billed per query/slot. It underpins log analytics, billing exports and business reporting in most GCP estates.</p><p>Platform relevance: you'll export Cloud Billing, audit logs and vulnerability data into BigQuery, manage datasets/IAM, and control query costs (partitioning, clustering, quotas). Interviewers ask because every senior GCP platform engineer ends up owning those pipelines.</p>`},
+{q:"Cloud DNS, Cloud CDN, and Cloud Armor — what does each protect or accelerate?",a:`<p><b>Cloud DNS</b> — managed authoritative DNS (public/private zones; private zones + DNS peering power Shared VPC name resolution). <b>Cloud CDN</b> — caches HTTP(S) content at Google edge locations in front of a global load balancer, cutting latency and origin load (signed URLs for private content). <b>Cloud Armor</b> — the WAF/DDoS edge security service attached to the LB: IP allow/deny lists, preconfigured WAF rules (OWASP), rate limiting and Adaptive Protection (ML-based L7 DDoS detection).</p><p>Typical stack: Cloud DNS → Global LB + Cloud Armor (security) + Cloud CDN (performance) → GKE/Cloud Run backends.</p>`},
+{q:"Workload identity and keyless authentication for CI pipelines in GCP.",a:`<p>Instead of storing a service-account JSON key in GitHub/GitLab (a long-lived, leak-prone credential), use <b>Workload Identity Federation</b>: the CI platform's OIDC token (e.g. GitHub Actions) is exchanged via the Security Token Service for a short-lived GCP access token impersonating a service account, constrained by attribute conditions (repo, branch, environment).</p><pre><code># GitHub Actions: google-github-actions/auth with
+# workload_identity_provider + service_account — no key file</code></pre><p>Same pattern for GKE (Workload Identity for pods) and for AWS/Azure workloads. Enforce with org policy disabling SA key creation (<code>iam.disableServiceAccountKeyCreation</code>).</p>`},
+{q:"How do committed use discounts and budgets help control GCP spend?",a:`<p><b>Committed Use Discounts (CUDs)</b> exchange a 1- or 3-year commitment for steep discounts: resource-based CUDs (specific machine series/region) and spend-based CUDs (flexible across regions/families for Compute Engine, GKE, Cloud Run) — up to ~55–70% for 3-year terms. <b>Sustained Use Discounts</b> apply automatically for long-running VMs (no commitment).</p><p><b>Budgets</b> in Cloud Billing set thresholds per project/folder/label with alerts (and can trigger Pub/Sub automation to cap spend). Combine with billing export to BigQuery for showback, labels for allocation, and quotas to prevent runaway consumption — the same FinOps layering as Azure/AWS, with GCP-specific names.</p>`}
+],refs:[
+{type:"web",title:"Google Cloud Documentation",url:"https://cloud.google.com/docs",note:"Official GCP docs — start from the architecture framework for design answers."},
+{type:"web",title:"Google Cloud Skills Boost",url:"https://www.cloudskillsboost.google",note:"Official hands-on labs and Professional Cloud Architect / DevOps paths."},
+{type:"video",title:"Google Cloud Tech — YouTube",url:"https://www.youtube.com/@googlecloudtech",note:"Official channel — GKE, Cloud Run and networking deep-dives."},
+{type:"video",title:"KodeKloud — GCP Training",url:"https://kodekloud.com",note:"Lab-based GCP training for associate/architect interviews."}
+]},
+{id:"python",num:"13",title:"Python",desc:"Data types, decorators, GIL, venvs, subprocess and a log-parsing practical.",intro:"Python for SRE/platform roles means automation fluency: clean scripts, safe subprocess use, and enough language depth (GIL, generators, decorators) to not be caught out. Interviewers often end with a live practical — the log parser is the template.",questions:[
+{q:"Explain Python's core data types, and mutable vs immutable — with examples.",a:`<p>Core types: <code>int, float, complex, bool, str, bytes, list, tuple, dict, set, frozenset, NoneType</code>. <b>Immutable</b> objects can't change after creation (<code>int, str, tuple, frozenset</code>) — "modifying" creates a new object. <b>Mutable</b> objects change in place (<code>list, dict, set</code>).</p><pre><code>a = [1,2]; b = a; b.append(3)  # a is also [1,2,3] — same object
+s = "hi"; s2 = s; s2 += "!"    # s unchanged — new string</code></pre><p>Why it matters: mutable default arguments and aliasing bugs (<code>def f(x=[])</code>) are the classic interview follow-ups, and immutables are hashable (usable as dict keys) while mutables are not.</p>`},
+{q:"list vs tuple vs set vs dict — when do you use each?",a:`<p><b>list</b> — ordered, mutable sequence; the default collection. <b>tuple</b> — ordered, immutable; for fixed records, multiple return values, dict keys, and a small memory/speed edge. <b>set</b> — unordered unique elements with O(1) membership and set algebra (<code>&amp; | -</code>); for deduplication and lookups. <b>dict</b> — key→value mapping, insertion-ordered (3.7+); for structured records and counting (<code>collections.Counter/defaultdict</code>).</p><p>Senior nuance: choose by access pattern — membership tests on a list are O(n); converting to a set is the standard optimisation interviewers probe for.</p>`},
+{q:"List comprehensions vs generator expressions — and what does yield do?",a:`<p>A <b>list comprehension</b> builds the whole list in memory: <code>[x*x for x in range(10) if x % 2]</code>. A <b>generator expression</b> (<code>(...)</code> with parentheses) produces values lazily, one at a time — constant memory, ideal for large files/streams and pipelines like <code>sum(len(line) for line in f)</code>.</p><p><code>yield</code> turns a function into a generator: calling it returns a generator object; each <code>next()</code> runs the function until the next <code>yield</code>, suspending state. That's how you write custom lazy iterators without a class — and why generators can't be rewound or indexed.</p>`},
+{q:"What is a decorator? Write a simple timing decorator.",a:`<p>A decorator is a callable that takes a function and returns a replacement function, applied with <code>@syntax</code> — used for timing, retries, caching (<code>@lru_cache</code>), auth and logging without modifying the wrapped code. Always use <code>functools.wraps</code> to preserve metadata:</p><pre><code>import time, functools
+def timed(fn):
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        try:
+            return fn(*args, **kwargs)
+        finally:
+            print(f"{fn.__name__}: {time.perf_counter()-start:.3f}s")
+    return wrapper
+
+@timed
+def deploy(): ...</code></pre>`},
+{q:"How does exception handling work — try/except/else/finally — and when do you define a custom exception?",a:`<pre><code>try:
+    data = json.loads(raw)
+except json.JSONDecodeError as e:
+    log.warning("bad json: %s", e); data = {}
+else:
+    process(data)      # runs only if no exception
+finally:
+    conn.close()       # always runs — cleanup</code></pre><p>Catch specific exceptions (never bare <code>except:</code> except at top-level boundaries), use <code>raise ... from e</code> to preserve chains, and let unexpected errors propagate. Define a <b>custom exception</b> (<code>class ConfigError(Exception)</code>) when callers need to distinguish your library's failure modes from generic ones — e.g. a CLI that catches <code>DeployError</code> to print a clean message and exit code.</p>`},
+{q:"Explain classes, inheritance, and common dunder methods (__init__, __str__, __repr__).",a:`<p>A class bundles state (attributes) and behaviour (methods); <code>__init__(self, ...)</code> initialises a new instance. Inheritance (<code>class Dog(Animal)</code>) reuses/overrides behaviour, resolved via the MRO (<code>Class.__mro__</code>); prefer composition over deep inheritance hierarchies, and use <code>super()</code> cooperatively.</p><p>Dunders customise built-in behaviour: <code>__repr__</code> = unambiguous, developer-facing string (ideally eval-able); <code>__str__</code> = human-readable (falls back to <code>__repr__</code>); plus <code>__eq__, __len__, __enter__/__exit__, __iter__</code>. Modern answer: for plain data holders use <code>@dataclass</code> which generates <code>__init__/__repr__/__eq__</code> for you.</p>`},
+{q:"What is the GIL, and when do you choose threading vs multiprocessing vs asyncio?",a:`<p>The <b>Global Interpreter Lock</b> (CPython) allows only one thread to execute Python bytecode at a time — threads don't speed up CPU-bound Python code (though they release the GIL during I/O and in many C extensions like NumPy).</p><p>Choose: <b>threading</b> for I/O-bound concurrency with shared memory (API calls, file I/O). <b>multiprocessing</b> for CPU-bound work — separate processes, true parallelism, higher memory/IPC cost. <b>asyncio</b> for many concurrent I/O connections (thousands of sockets) with async libraries. Note Python 3.13+ ships an experimental free-threaded build, but the GIL model is still the interview answer.</p>`},
+{q:"What are virtual environments, and how do requirements.txt and pyproject.toml differ?",a:`<p>A <b>virtual environment</b> (<code>python -m venv .venv</code>) isolates a project's interpreter + packages from the system and other projects, avoiding dependency conflicts. Activate, <code>pip install</code>, and record the result.</p><p><code>requirements.txt</code> is a pip install list — a deployment lock-style artefact (pin exactly with <code>pip freeze</code> / pip-tools). <code>pyproject.toml</code> is the project's standard metadata/build config (PEP 517/621): name, dependencies (ranges), build backend, tool config (ruff, pytest). Senior workflow: declare ranges in <code>pyproject.toml</code>, lock exact versions for deployment (uv/pip-tools/Poetry lock files).</p>`},
+{q:"How do context managers work, and what does the with statement guarantee?",a:`<p>A context manager implements <code>__enter__</code> and <code>__exit__</code>; <code>with</code> guarantees <code>__exit__</code> runs — releasing the resource — even if the block raises. That's why file handling is always:</p><pre><code>with open(path) as f:   # file closed even on exception
+    data = f.read()</code></pre><p>Beyond files: DB connections, locks (<code>with lock:</code>), temporary directories, and suppressing errors via <code>__exit__</code> returning True. Write your own with a class or with <code>@contextlib.contextmanager</code> + <code>try/finally</code> around a <code>yield</code>. In ops scripts this is the difference between a leaked lock/file handle and a safe one.</p>`},
+{q:"How do you run external commands safely from Python (subprocess) — why avoid shell=True?",a:`<pre><code>import subprocess
+result = subprocess.run(
+    ["systemctl", "is-active", service],
+    capture_output=True, text=True, timeout=10, check=False)
+print(result.returncode, result.stdout)</code></pre><p>Pass the command as a <b>list</b> with <code>shell=False</code> (default): arguments go directly to exec, so user input can't inject shell syntax (<code>; rm -rf</code>). <code>shell=True</code> with formatted strings is a command-injection vulnerability and adds quoting bugs. Use <code>check=True</code> (or inspect <code>returncode</code>), set <code>timeout</code>, and prefer a native library (e.g. <code>requests</code>, <code>pathlib</code>) over shelling out when one exists.</p>`},
+{q:"*args and **kwargs, lambdas, and map/filter — where do they help and where do they hurt readability?",a:`<p><code>*args</code> collects extra positional arguments as a tuple; <code>**kwargs</code> collects keyword arguments as a dict — essential for wrappers/decorators and flexible APIs, harmful when they hide a function's real signature (prefer explicit parameters + <code>*</code> keyword-only markers in public APIs).</p><p><code>lambda</code> is for tiny throwaway functions (sort keys, callbacks): <code>sorted(users, key=lambda u: u.last_login)</code>. <code>map/filter</code> work, but <b>comprehensions are the idiomatic, more readable choice</b> in Python: <code>[x for x in items if x.active]</code> beats <code>list(filter(lambda...))</code>. Rule: if a lambda needs a name or a second line, write a <code>def</code>.</p>`},
+{q:"Practical: how would you write a Python script that parses a log file and reports the top error patterns?",a:`<p>Stream the file (never load it whole), normalise each error line into a pattern (strip timestamps/IPs/numbers with regex), count with <code>Counter</code>, and print the top N:</p><pre><code>#!/usr/bin/env python3
+import re, sys
+from collections import Counter
+
+PATTERNS = re.compile(r"\\b\\d+\\b")
+counts = Counter()
+with open(sys.argv[1], errors="replace") as f:
+    for line in f:
+        if "ERROR" not in line:
+            continue
+        msg = line.split("ERROR", 1)[-1].strip()
+        msg = PATTERNS.sub("N", msg)  # collapse variable numbers
+        counts[msg] += 1
+
+for msg, n in counts.most_common(10):
+    print(f"{n:6}  {msg}")</code></pre><p>Talk through the senior extras: handle rotated/compressed logs, make the level and top-N arguments (<code>argparse</code>), exit non-zero on missing file, and note you'd reach for <code>journalctl / awk</code> for a one-off but Python when it becomes a reusable tool.</p>`}
+],refs:[
+{type:"web",title:"Python Tutorial & Documentation",url:"https://docs.python.org/3/tutorial/",note:"The official tutorial — the reference for language semantics and the stdlib."},
+{type:"web",title:"Real Python",url:"https://realpython.com",note:"In-depth practical tutorials — decorators, concurrency and testing done properly."},
+{type:"video",title:"Corey Schafer — YouTube (Python series)",url:"https://www.youtube.com/@coreyms",note:"The clearest Python OOP / decorators / context-manager explanations on YouTube."},
+{type:"video",title:"freeCodeCamp — YouTube (Python course)",url:"https://www.youtube.com/@freecodecamp",note:"Full Python course for a structured end-to-end refresh."}
+]}
+);
+</script>
+<script>
+const grid = document.getElementById('subjectGrid');
+const sideNav = document.getElementById('sideNav');
+const mobileSelect = document.getElementById('mobileSelect');
+const homeView = document.getElementById('homeView');
+const subjectView = document.getElementById('subjectView');
+const subjectContent = document.getElementById('subjectContent');
+let revealed = new Set();
+
+function esc(s){return s.replace(/"/g,'&quot;')}
+function renderGrid(filter=''){
+  const f = filter.toLowerCase().trim();
+  grid.innerHTML = SUBJECTS.filter(s=>{
+    if(!f) return true;
+    return (s.title+' '+s.desc+' '+s.questions.map(q=>q.q).join(' ')).toLowerCase().includes(f);
+  }).map(s=>`
+    <a class="card" href="#${s.id}">
+      <div class="card-top"><span>${s.num}</span><span>${s.questions.length} questions</span></div>
+      <h3>${s.title}</h3><p>${s.desc}</p><div class="card-arrow">→</div>
+    </a>`).join('') || `<p style="color:var(--muted)">No subjects match “${esc(filter)}”. Try “SELinux”, “Terraform” or “Python”.</p>`;
+}
+function renderSide(activeId){
+  sideNav.innerHTML = SUBJECTS.map(s=>`<a class="side-link ${s.id===activeId?'active':''}" href="#${s.id}"><span class="num">${s.num}</span><span>${s.title}</span><span class="count">${s.questions.length}</span></a>`).join('');
+  mobileSelect.innerHTML = SUBJECTS.map(s=>`<option value="${s.id}" ${s.id===activeId?'selected':''}>${s.num} — ${s.title} (${s.questions.length} Qs)</option>`).join('');
+}
+mobileSelect.addEventListener('change', e=>{ location.hash = '#'+e.target.value; });
+
+function updateProgress(total){
+  const n = revealed.size;
+  document.getElementById('progressText').textContent = `${n} / ${total} revealed`;
+  document.getElementById('progressBar').style.width = total? (n/total*100)+'%':'0%';
+}
+
+function renderSubject(id){
+  const idx = SUBJECTS.findIndex(s=>s.id===id);
+  if(idx===-1){ showHome(); return; }
+  const s = SUBJECTS[idx];
+  revealed = new Set();
+  homeView.classList.add('hidden'); subjectView.classList.remove('hidden');
+  renderSide(id);
+  const prev = SUBJECTS[idx-1], next = SUBJECTS[idx+1];
+  subjectContent.innerHTML = `
+    <div class="crumb">Interview Prep &nbsp;/&nbsp; ${s.num} &nbsp;/&nbsp; ${s.questions.length} questions</div>
+    <h1>${s.title}</h1>
+    <p class="intro">${s.intro}</p>
+    <div class="meta-row"><span class="pill">Senior level</span><span class="pill">${s.questions.length} Q&amp;As</span><span class="pill">Answers hidden — self-test first</span><span class="pill">${s.desc}</span></div>
+    <div class="toolbar"><p><b style="color:var(--text)">Self-test mode</b> — answer aloud, then reveal.</p><div class="toolbar-actions"><button class="small-btn primary" id="expandAll">Expand all</button><button class="small-btn" id="collapseAll">Collapse all</button></div></div>
+    <div id="qaList">
+    ${s.questions.map((item,i)=>`
+      <article class="qa" data-idx="${i}">
+        <div class="qa-head"><span class="qnum">${i+1}</span><h3>${item.q}</h3></div>
+        <button class="reveal-btn" data-toggle="${i}" aria-expanded="false">Show answer ↓</button>
+        <div class="answer hidden" id="ans-${i}">${item.a}</div>
+      </article>`).join('')}
+    </div>
+    <section class="refs"><h2>References &amp; further learning</h2><p class="sub">Websites and videos for ${s.title} — official docs first, then the channels worth your time.</p>
+      ${s.refs.map(r=>`<div class="ref-item"><span class="badge ${r.type}">${r.type==='video'?'▶ Video':'Web'}</span><div><a href="${r.url}" target="_blank" rel="noopener"><strong>${r.title} ↗</strong></a><p>${r.note}</p><p style="font-family:monospace;font-size:.78rem">${r.url}</p></div></div>`).join('')}
+    </section>
+    <div class="next-nav">
+      <div>${prev?`<a class="next-card" href="#${prev.id}"><span>← Previous</span><strong>${prev.title}</strong></a>`:''}</div>
+      <div style="text-align:right">${next?`<a class="next-card" href="#${next.id}"><span>Next →</span><strong>${next.title}</strong></a>`:`<a class="next-card" href="#/"><span>Done ✓</span><strong>Back to all subjects</strong></a>`}</div>
+    </div>
+    <p style="margin-top:22px"><a href="#/">← All subjects</a> &nbsp;·&nbsp; Styled after <a href="https://docs.techdox.nz" target="_blank" rel="noopener">docs.techdox.nz</a> — clean docs layout, sidebar navigation, card library.</p>
+  `;
+  updateProgress(s.questions.length);
+  window.scrollTo({top:0});
+  subjectContent.querySelectorAll('[data-toggle]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = btn.getAttribute('data-toggle');
+      const ans = document.getElementById('ans-'+i);
+      const open = !ans.classList.contains('hidden');
+      if(open){ ans.classList.add('hidden'); btn.textContent='Show answer ↓'; btn.setAttribute('aria-expanded','false'); revealed.delete(i); }
+      else { ans.classList.remove('hidden'); btn.textContent='Hide answer ↑'; btn.setAttribute('aria-expanded','true'); revealed.add(i); }
+      updateProgress(s.questions.length);
+    });
+  });
+  document.getElementById('expandAll').addEventListener('click', ()=>{
+    s.questions.forEach((_,i)=>{ document.getElementById('ans-'+i).classList.remove('hidden'); revealed.add(String(i)); });
+    subjectContent.querySelectorAll('[data-toggle]').forEach(b=>{b.textContent='Hide answer ↑'; b.setAttribute('aria-expanded','true')});
+    updateProgress(s.questions.length);
+  });
+  document.getElementById('collapseAll').addEventListener('click', ()=>{
+    s.questions.forEach((_,i)=>{ document.getElementById('ans-'+i).classList.add('hidden'); });
+    revealed.clear();
+    subjectContent.querySelectorAll('[data-toggle]').forEach(b=>{b.textContent='Show answer ↓'; b.setAttribute('aria-expanded','false')});
+    updateProgress(s.questions.length);
+  });
+}
+function showHome(){ homeView.classList.remove('hidden'); subjectView.classList.add('hidden'); window.scrollTo({top:0}); }
+function router(){
+  const h = location.hash.replace('#','').replace('/','');
+  if(!h || h==='all' || h==='tips'){ showHome(); if(h==='all'){ setTimeout(()=>document.getElementById('all')?.scrollIntoView({behavior:'smooth'}),50);} if(h==='tips'){ setTimeout(()=>document.getElementById('tips')?.scrollIntoView({behavior:'smooth'}),50);} return; }
+  renderSubject(h);
+}
+window.addEventListener('hashchange', router);
+document.getElementById('heroSearch').addEventListener('input', e=>{ renderGrid(e.target.value); document.getElementById('topSearch').value=e.target.value; });
+document.getElementById('topSearch').addEventListener('input', e=>{ if(subjectView.classList.contains('hidden')===false){ location.hash='#/'; } renderGrid(e.target.value); document.getElementById('heroSearch').value=e.target.value; });
+document.addEventListener('keydown', e=>{ if(e.key==='/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){ e.preventDefault(); (homeView.classList.contains('hidden')? document.getElementById('topSearch'): document.getElementById('heroSearch')).focus(); }});
+renderGrid(); router();
+</script>
+</body>
+</html>
