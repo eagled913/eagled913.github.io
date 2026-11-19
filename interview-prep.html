@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="color-scheme" content="light dark"/>
 <link rel="icon" href="data:,">
-<title>Interview Prep — Senior Linux, Cloud & Platform Q&A</title>
+<title>Interview Prep — Linux, Cloud & Platform Q&A (Entry + Senior)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -132,6 +132,15 @@ footer{border-top:1px solid var(--border);background:var(--surface);margin-top:4
 .progress{height:6px;background:var(--surface3);border-radius:999px;overflow:hidden;margin-top:10px}
 .progress i{display:block;height:100%;background:var(--accent);width:0%}
 .study-tip{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-top:18px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.level-head{margin:30px 0 4px;padding:18px 0 6px;border-top:2px solid var(--border)}
+.level-head:first-of-type{margin-top:8px}
+.level-head h2{font-size:1.35rem;letter-spacing:-.02em;margin:0 0 4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.level-head p{margin:0;color:var(--muted);font-size:.92rem}
+.level-tag{font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;padding:4px 8px;border-radius:999px}
+.level-tag.entry{background:#dcfce7;color:#166534}
+.level-tag.senior{background:#dbeafe;color:#1e40af}
+@media(prefers-color-scheme:dark){.level-tag.entry{background:#052e16;color:#bbf7d0}.level-tag.senior{background:#1e3a5f;color:#bfdbfe}}
+.qnum.entry{background:#16a34a}
 .study-tip h3{margin:0 0 4px}
 </style>
 </head>
@@ -148,11 +157,11 @@ footer{border-top:1px solid var(--border);background:var(--surface);margin-top:4
     <section class="hero">
       <div class="kicker">Interview Prep &nbsp;/&nbsp; Documentation</div>
       <h1>Prepare like a senior.<br>Answer like one.</h1>
-      <p class="lead">Practical Q&amp;A for Linux, cloud and platform roles — 156 questions across 13 subjects, written for a Senior Linux Administrator / SRE-DevOps lead. Self-test first, then reveal the model answer.</p>
+      <p class="lead">Practical Q&amp;A for Linux, cloud and platform roles — 260 questions across 13 subjects: 8 entry-level fundamentals plus 12 senior-level questions in every subject. Self-test first, then reveal the model answer.</p>
       <div class="hero-search">⌕ <input id="heroSearch" placeholder="Find a subject, command or topic — try “SELinux”, “CrashLoopBackOff”, “rebase”..."> <span>/</span></div>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#rhel">Start with RHEL →</a>
-        <a class="btn" href="#all">Browse all subjects <small>13 subjects · 156 Q&amp;As</small></a>
+        <a class="btn" href="#all">Browse all subjects <small>13 subjects · 260 Q&amp;As</small></a>
       </div>
       <div class="quick">
         <h3>What are you prepping for?</h3>
@@ -169,7 +178,7 @@ footer{border-top:1px solid var(--border);background:var(--surface);margin-top:4
       <div><div class="kicker">Explore the library</div><h2>Find your next subject</h2></div>
       <a href="#all" style="font-size:.9rem">All subjects →</a>
     </div>
-    <p style="color:var(--muted);font-size:.92rem;margin:-6px 0 16px">For Keith Hyde — Senior Linux Administrator (RHEL / Azure / Kubernetes / OpenShift / Ansible / Terraform). Each subject: 12 questions, hidden answers for self-testing, and curated references at the end.</p>
+    <p style="color:var(--muted);font-size:.92rem;margin:-6px 0 16px">For Keith Hyde — Senior Linux Administrator (RHEL / Azure / Kubernetes / OpenShift / Ansible / Terraform). Each subject: 20 questions — 8 entry-level + 12 senior-level, hidden answers for self-testing, and curated references at the end.</p>
     <div class="grid" id="subjectGrid"></div>
 
     <div class="study-tip" id="tips">
@@ -177,12 +186,12 @@ footer{border-top:1px solid var(--border);background:var(--surface);margin-top:4
       <div style="flex:1;min-width:240px">
         <div class="kicker">How to use this</div>
         <h3>Self-test, don’t just read</h3>
-        <p style="margin:0;color:var(--muted);font-size:.94rem">Open a subject, say your answer out loud in 30–60 seconds, then hit <b>Show answer</b> and compare. Use <b>Expand all</b> the night before for a fast skim. The strongest senior answers name the trade-off, the command, and what you’d check next.</p>
+        <p style="margin:0;color:var(--muted);font-size:.94rem">Start with the entry-level set in each subject to lock in the fundamentals, then move to the senior questions. Say your answer out loud in 30–60 seconds, then hit <b>Show answer</b> and compare. Use <b>Expand all</b> the night before for a fast skim.</p>
       </div>
       <a class="btn" href="#linux">Start with Linux →</a>
     </div>
   </div>
-  <footer><div class="wrap footer-grid"><div><div class="logo">~/ Interview Prep</div><p style="color:var(--muted);font-size:.9rem">Build answers you understand.</p></div><div style="font-size:.9rem;line-height:2"><a href="https://docs.redhat.com" target="_blank" rel="noopener">Red Hat Docs ↗</a><br><a href="https://kubernetes.io/docs" target="_blank" rel="noopener">Kubernetes Docs ↗</a><br><a href="https://developer.hashicorp.com/terraform" target="_blank" rel="noopener">Terraform Docs ↗</a></div><div><div class="kicker">156 questions</div><p style="color:var(--muted);font-size:.9rem">13 subjects · Senior level<br>Styled after docs.techdox.nz</p></div></div></footer>
+  <footer><div class="wrap footer-grid"><div><div class="logo">~/ Interview Prep</div><p style="color:var(--muted);font-size:.9rem">Build answers you understand.</p></div><div style="font-size:.9rem;line-height:2"><a href="https://docs.redhat.com" target="_blank" rel="noopener">Red Hat Docs ↗</a><br><a href="https://kubernetes.io/docs" target="_blank" rel="noopener">Kubernetes Docs ↗</a><br><a href="https://developer.hashicorp.com/terraform" target="_blank" rel="noopener">Terraform Docs ↗</a></div><div><div class="kicker">260 questions</div><p style="color:var(--muted);font-size:.9rem">13 subjects · Entry + Senior level<br>Styled after docs.techdox.nz</p></div></div></footer>
 </div>
 
 <!-- SUBJECT VIEW -->
@@ -193,7 +202,7 @@ footer{border-top:1px solid var(--border);background:var(--surface);margin-top:4
       <select class="mobile-select" id="mobileSelect" aria-label="Choose subject"></select>
       <nav class="side-nav-list" id="sideNav"></nav>
       <div style="margin-top:20px;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px">
-        <p style="margin:0;font-size:.84rem;color:var(--muted)"><b style="color:var(--text)">Progress</b><br><span id="progressText">0 / 12 revealed</span></p>
+        <p style="margin:0;font-size:.84rem;color:var(--muted)"><b style="color:var(--text)">Progress</b><br><span id="progressText">0 / 20 revealed</span></p>
         <div class="progress"><i id="progressBar"></i></div>
       </div>
     </aside>
@@ -665,6 +674,238 @@ for msg, n in counts.most_common(10):
 );
 </script>
 <script>
+const ENTRY_QUESTIONS = {
+rhel:[
+{q:"What is RHEL, and what is a Linux distribution?",a:`<p>A Linux distribution is a complete operating system built around the Linux kernel, packaged with tools, libraries and a package manager so you can install and run it. RHEL (Red Hat Enterprise Linux) is Red Hat's commercial distribution for servers — it is tested, certified on hardware and software, and comes with paid support and long-term updates.</p>`},
+{q:"How do you check which RHEL version a system is running?",a:`<p>Look at the release files and the hostname tool:</p><pre><code>cat /etc/redhat-release
+cat /etc/os-release
+hostnamectl
+uname -r   # kernel version only</code></pre><p><code>/etc/os-release</code> is the standard file on most modern Linux systems.</p>`},
+{q:"How do you install, update, and remove software packages with dnf?",a:`<p><code>dnf</code> is RHEL's package manager. It installs software from configured repositories and handles dependencies for you:</p><pre><code>dnf install httpd
+dnf update
+dnf remove httpd
+dnf search nginx</code></pre>`},
+{q:"How do you start, stop, restart, and enable a service with systemctl?",a:`<p><code>systemctl</code> controls services managed by systemd:</p><pre><code>systemctl start httpd
+systemctl stop httpd
+systemctl restart httpd
+systemctl enable --now httpd   # enable at boot + start now</code></pre><p><i>Enable</i> means start automatically at boot; <i>start</i> means run right now — they are different.</p>`},
+{q:"How do you check the status of a service and view its logs with journalctl?",a:`<pre><code>systemctl status httpd
+journalctl -u httpd
+journalctl -u httpd -f   # follow live
+journalctl -xe           # recent errors with explanations</code></pre><p><code>status</code> shows if the service is active, when it started, and its last log lines. <code>journalctl</code> is the full system log viewer.</p>`},
+{q:"How do you check disk space and disk usage (df and du)?",a:`<p><code>df</code> shows space per filesystem; <code>du</code> shows space per folder:</p><pre><code>df -h          # human-readable, per filesystem
+du -sh /var/*  # size of each folder under /var
+du -sh .       # size of current folder</code></pre><p>Start with <code>df -h</code> to find the full filesystem, then use <code>du</code> to find what is filling it.</p>`},
+{q:"How do you change file permissions and ownership with chmod and chown?",a:`<p><code>chmod</code> changes who can read, write or run a file. <code>chown</code> changes who owns it:</p><pre><code>chmod 755 script.sh
+chmod u+x script.sh
+chown keith:keith file.txt
+chown -R keith:keith /data/app</code></pre><p>In <code>755</code>, the digits are owner, group, others — 7 = read+write+execute, 5 = read+execute.</p>`},
+{q:"How do you allow a service or port through the firewall with firewall-cmd?",a:`<p>RHEL's firewall is firewalld. Add a service or port permanently, then reload:</p><pre><code>firewall-cmd --add-service=https --permanent
+firewall-cmd --add-port=8080/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --list-all</code></pre><p>Without <code>--permanent</code> the change disappears on reload or reboot.</p>`}
+],
+linux:[
+{q:"What is Linux, and what is the kernel?",a:`<p>Linux is a free, open-source operating system family used on most servers and in the cloud. The <b>kernel</b> is its core program: it talks to the hardware (CPU, memory, disks, network) and lets applications use those resources safely. Everything else — shell, tools, desktop — runs on top of the kernel.</p>`},
+{q:"How do you navigate the filesystem — pwd, ls, cd — and what is the difference between absolute and relative paths?",a:`<pre><code>pwd        # where am I?
+ls         # list files here
+ls -la     # include hidden files + details
+cd /var/log   # go to a folder
+cd ..         # go up one level
+cd ~          # go home</code></pre><p>An <b>absolute path</b> starts from the root, like <code>/var/log</code>. A <b>relative path</b> starts from where you are now, like <code>../log</code> or just <code>file.txt</code>.</p>`},
+{q:"How do you create, copy, move, rename, and delete files and directories?",a:`<pre><code>touch file.txt          # create empty file
+mkdir folder            # create directory
+cp file.txt copy.txt    # copy
+cp -r folder folder2    # copy a directory
+mv old.txt new.txt      # rename (move)
+mv file.txt /tmp/       # move
+rm file.txt             # delete file
+rm -r folder            # delete directory</code></pre><p>Be careful with <code>rm -r</code> — Linux has no recycle bin.</p>`},
+{q:"How do you view the contents of a text file (cat, less, head, tail)?",a:`<pre><code>cat file.txt       # print whole file
+less file.txt      # page through it (q to quit)
+head file.txt      # first 10 lines
+head -n 20 file.txt
+tail file.txt      # last 10 lines
+tail -f app.log    # follow new lines live</code></pre><p>Use <code>less</code> for large files and <code>tail -f</code> to watch logs as they grow.</p>`},
+{q:"How do you search for text inside files with grep, and find files with find?",a:`<pre><code>grep "error" app.log
+grep -i "error" app.log      # ignore case
+grep -r "TODO" /etc/app/     # search in a folder
+find /var -name "*.log"      # find by name
+find . -type f -mtime -1     # files changed in last day</code></pre><p><code>grep</code> searches <i>inside</i> files; <code>find</code> searches <i>for</i> files by name, size or date.</p>`},
+{q:"What do read, write, and execute permissions mean, and who are the user, group, and others?",a:`<p>Every file has three sets of permissions: <b>user</b> (the owner), <b>group</b> (users in the file's group), and <b>others</b> (everyone else). Each set can have <b>r</b> (read), <b>w</b> (write) and <b>x</b> (execute — run a program, or enter a directory). You see them with <code>ls -l</code>, for example <code>-rwxr-xr--</code>.</p>`},
+{q:"How do you see what processes are running, and how do you stop a process (ps, top, kill)?",a:`<pre><code>ps aux          # all running processes
+top             # live view (q to quit)
+kill 1234       # politely stop PID 1234 (SIGTERM)
+kill -9 1234    # force stop (SIGKILL) — last resort</code></pre><p>Every process has a PID (process ID). Try <code>kill</code> first so the program can clean up; use <code>-9</code> only if it will not stop.</p>`},
+{q:"What are redirection and pipes (>, >>, |)?",a:`<p>Redirection sends a command's output to a file. Pipes send one command's output into another command:</p><pre><code>ls > files.txt       # write output to file (overwrite)
+ls >> files.txt      # append to file
+cat app.log | grep error   # pipe: filter the output
+ps aux | grep nginx</code></pre><p>The pipe symbol <code>|</code> is how you chain small tools together.</p>`}
+],
+kubernetes:[
+{q:"What is Kubernetes, and what problem does it solve?",a:`<p>Kubernetes is a system for running containerised applications across many machines. It solves the problem of managing lots of containers by hand: it starts them, restarts them if they crash, spreads them across servers, and scales them up or down. You describe what you want, and Kubernetes works to keep it that way.</p>`},
+{q:"What is a container, and what is a pod?",a:`<p>A <b>container</b> is a lightweight, isolated package that holds an application and everything it needs to run. A <b>pod</b> is the smallest unit in Kubernetes — it holds one container (usually) or a few that must run together on the same machine and share the same network address.</p>`},
+{q:"What is a node, and what is the difference between the control plane and worker nodes?",a:`<p>A <b>node</b> is one machine (physical or virtual) in the cluster. <b>Worker nodes</b> run your application pods. The <b>control plane</b> is the brain — it decides where pods run, watches the cluster's health, and stores the desired state. In managed services like EKS or AKS, the cloud provider runs the control plane for you.</p>`},
+{q:"What is a Deployment?",a:`<p>A Deployment is an object that manages a set of identical pods. You tell it "run 3 copies of this app" and it makes sure 3 are always running — replacing any that fail and rolling out new versions gradually instead of all at once. It is the normal way to run a stateless application.</p>`},
+{q:"What is a Service in Kubernetes?",a:`<p>Pods come and go and their IP addresses change, so a Service gives a group of pods one stable name and IP address. Other apps talk to the Service, and it forwards traffic to a healthy pod behind it. It also load-balances across the pods.</p>`},
+{q:"How do you use kubectl to view pods, get details, and read logs (get, describe, logs)?",a:`<p><code>kubectl</code> is the command-line tool for Kubernetes:</p><pre><code>kubectl get pods
+kubectl get pods -A          # all namespaces
+kubectl describe pod my-pod  # detailed info + events
+kubectl logs my-pod          # container logs</code></pre><p>When a pod is broken, <code>describe</code> (for events) and <code>logs</code> are the first two commands to run.</p>`},
+{q:"What is a namespace?",a:`<p>A namespace is a way to divide one cluster into separate areas — for example <code>dev</code>, <code>test</code> and <code>prod</code>, or one per team. Objects in different namespaces can use the same names without clashing, and you can set permissions and quotas per namespace. It is organisation inside a single cluster, not a separate cluster.</p>`},
+{q:"What is a container registry, and where do images come from?",a:`<p>A container registry is a storage service for container images — like an app store for images. Kubernetes pulls the image from the registry when it starts a pod. Common registries are Docker Hub (public), Quay, and private cloud registries such as Amazon ECR, Azure Container Registry and Google Artifact Registry.</p>`}
+],
+terraform:[
+{q:"What is Terraform, and what does \"infrastructure as code\" mean?",a:`<p>Terraform is a tool that creates cloud infrastructure — servers, networks, databases — from text files. "Infrastructure as code" means you write down what you want in code instead of clicking in a web console, so the setup is repeatable, reviewable, and saved in version control like application code.</p>`},
+{q:"What is a provider in Terraform?",a:`<p>A provider is a plugin that lets Terraform talk to one platform, such as AWS, Azure, Google Cloud or Kubernetes. It knows how to create and delete that platform's resources through its API. You declare the providers you need at the top of your configuration.</p>`},
+{q:"What do terraform init, terraform plan, and terraform apply each do?",a:`<pre><code>terraform init   # download providers, set up the project
+terraform plan   # preview what will change — creates nothing
+terraform apply  # actually make the changes</code></pre><p>The safe habit is always the same: <code>init</code> once, <code>plan</code> to review, then <code>apply</code> to confirm.</p>`},
+{q:"What is a resource in Terraform?",a:`<p>A resource is one piece of infrastructure Terraform manages — for example one virtual machine, one storage bucket, or one network. You define it in code with its type and settings, and Terraform creates it, tracks it, and can update or delete it later.</p>`},
+{q:"What is the Terraform state file, in simple terms?",a:`<p>The state file (<code>terraform.tfstate</code>) is Terraform's record of what it has created and how your code maps to real resources. Terraform reads it on every run to work out what has changed. Treat it as important and sensitive: never edit it by hand, and store it remotely when working in a team.</p>`},
+{q:"What are variables and outputs in Terraform?",a:`<p><b>Variables</b> are inputs to your configuration — values like region or instance size that you can change without editing the main code. <b>Outputs</b> are values Terraform shows you after it finishes, such as the IP address of a new server, and other configurations can read them.</p>`},
+{q:"What do terraform fmt and terraform validate check?",a:`<pre><code>terraform fmt       # tidy up formatting automatically
+terraform validate  # check the code for syntax errors</code></pre><p><code>fmt</code> keeps files consistently styled. <code>validate</code> catches typos and missing arguments before you run a plan — but it does not check that your cloud credentials or values will actually work.</p>`},
+{q:"What is a module, in simple terms?",a:`<p>A module is a reusable package of Terraform code — a folder of resources grouped together for one job, like "a network" or "a web server setup". Instead of copying the same code into every project, you call the module and pass in a few variables.</p>`}
+],
+docker:[
+{q:"What is Docker, and what is a container?",a:`<p>Docker is a platform for packaging and running applications in <b>containers</b>. A container bundles an app with its libraries and settings so it runs the same way on any machine. Containers are lightweight and start in seconds because they share the host's operating system kernel instead of booting a whole virtual machine.</p>`},
+{q:"What is the difference between an image and a container?",a:`<p>An <b>image</b> is the read-only template — the packaged files for an app. A <b>container</b> is a running (or stopped) instance made from an image. Think of the image as the recipe or class, and containers as the meals or objects made from it: you can run many containers from one image.</p>`},
+{q:"How do you run a container with docker run, and what do -d, -p, and --name do?",a:`<pre><code>docker run -d -p 8080:80 --name web nginx</code></pre><p><code>-d</code> runs it in the background (detached). <code>-p 8080:80</code> maps port 8080 on your machine to port 80 in the container. <code>--name</code> gives the container an easy name instead of a random one. <code>nginx</code> is the image to run.</p>`},
+{q:"How do you list running containers and images, and how do you stop and remove a container?",a:`<pre><code>docker ps        # running containers
+docker ps -a     # all containers, including stopped
+docker images    # downloaded images
+docker stop web  # stop a container
+docker rm web    # delete a stopped container</code></pre>`},
+{q:"What is a Dockerfile?",a:`<p>A Dockerfile is a plain text file of step-by-step instructions for building an image — which base image to start from, which files to copy in, which commands to run, and which command starts the app. You build it with <code>docker build -t myapp .</code></p>`},
+{q:"What is Docker Hub?",a:`<p>Docker Hub is Docker's public registry — a website where images are stored and shared. When you run an image you do not have locally, Docker downloads it from Docker Hub automatically. Teams also use private registries, but Docker Hub is the default public one.</p>`},
+{q:"How do you view a container's logs and open a shell inside a running container?",a:`<pre><code>docker logs web       # see its output
+docker logs -f web    # follow the output live
+docker exec -it web /bin/sh    # open a shell inside
+# use /bin/bash instead if the image has it</code></pre><p><code>logs</code> is for reading output from outside; <code>exec</code> is for going inside to look around.</p>`},
+{q:"What is a Docker volume, in simple terms?",a:`<p>A volume is storage for a container that lives outside the container itself. Containers are temporary — when one is deleted, its internal files go with it — so data you must keep, like a database's files, goes in a volume. Volumes are managed by Docker and can be shared between containers.</p>`}
+],
+ansible:[
+{q:"What is Ansible, and what is it used for?",a:`<p>Ansible is an automation tool from Red Hat. It configures servers, installs software, and runs the same setup steps on many machines at once from one place — for example, setting up 50 servers identically without logging into each one by hand.</p>`},
+{q:"What does it mean that Ansible is agentless?",a:`<p>It means you do not install any Ansible software on the servers being managed. Ansible connects from your control machine over SSH, runs the work using Python that is already on the server, and disconnects. There is no agent to install, update, or keep running.</p>`},
+{q:"What is a playbook, and what language is it written in?",a:`<p>A playbook is a file that describes what Ansible should do — which machines to configure and which steps to run, in order. Playbooks are written in <b>YAML</b>, a simple text format based on indentation and <code>key: value</code> pairs. You run one with <code>ansible-playbook site.yml</code>.</p>`},
+{q:"What is an inventory file?",a:`<p>An inventory is the list of servers Ansible will manage, usually grouped — for example a <code>web</code> group and a <code>db</code> group. It can be a simple text file with hostnames or IP addresses. Playbooks target a group from the inventory, like "run these steps on all web servers".</p>`},
+{q:"What is an Ansible module? Give a few examples.",a:`<p>A module is a small, ready-made unit of work that a task calls — you give it a few options instead of writing commands yourself. Examples: <code>copy</code> (copy a file), <code>package</code> (install software), <code>service</code> (start or stop a service), and <code>user</code> (create a user account). There are hundreds of built-in modules.</p>`},
+{q:"How do you run a one-off ad hoc command with Ansible?",a:`<p>Ad hoc commands run a single quick task without writing a playbook, using the <code>ansible</code> command:</p><pre><code>ansible all -m ping              # check hosts respond
+ansible web -a "uptime"          # run a shell command
+ansible all -m copy -a "src=a.txt dest=/tmp/a.txt"</code></pre><p>They are handy for quick checks and one-time fixes.</p>`},
+{q:"What is a task, and what is a play in a playbook?",a:`<p>A <b>task</b> is one single step, like "install nginx" or "copy this config file". A <b>play</b> is a set of tasks aimed at one group of hosts. A playbook contains one or more plays — for example, one play for the web servers and another for the database servers.</p>`},
+{q:"In simple terms, why is Ansible called idempotent?",a:`<p>Idempotent means you can run the same playbook again and again and the result stays the same. If a package is already installed or a file is already correct, Ansible reports "ok" and changes nothing instead of doing the work twice or breaking it. That makes re-running a playbook safe.</p>`}
+],
+git:[
+{q:"What is Git, and what is version control?",a:`<p>Version control is a system that records changes to files over time, so you can see what changed, who changed it, and go back to an older version. Git is the most widely used version control tool — it runs on your own computer and is the standard for software projects.</p>`},
+{q:"What is a repository?",a:`<p>A repository (or "repo") is a project folder that Git is tracking, including a hidden <code>.git</code> folder that holds the full history of every change. If you copy the folder, you copy the history with it. You create one with <code>git init</code> or by cloning an existing project.</p>`},
+{q:"How do you copy an existing project with git clone?",a:`<pre><code>git clone https://github.com/org/project.git</code></pre><p>This downloads the whole project, including its history, into a new folder on your machine and connects it to the original remote repository so you can pull updates and push your work later.</p>`},
+{q:"What do git add, git commit, and git push do?",a:`<p>They are the basic three-step workflow:</p><pre><code>git add file.txt   # stage: choose changes for the next snapshot
+git commit -m "Fix login bug"  # save the snapshot locally with a message
+git push           # upload your commits to the remote (e.g. GitHub)</code></pre><p>Nothing is shared with your team until you push.</p>`},
+{q:"How do you check the state of your work with git status and see history with git log?",a:`<pre><code>git status         # what changed, what is staged, which branch
+git log            # full history of commits
+git log --oneline  # one short line per commit</code></pre><p>Run <code>git status</code> often — it tells you exactly where you stand and usually suggests the next command.</p>`},
+{q:"What is a branch, and how do you create one and switch to it?",a:`<p>A branch is a separate line of work where you can make changes without affecting the main code until you are ready. Create and switch in one step:</p><pre><code>git switch -c feature-login   # create + switch (modern)
+# older equivalent: git checkout -b feature-login
+git branch                    # list branches</code></pre>`},
+{q:"What is a merge, in simple terms?",a:`<p>Merging means combining the work from one branch into another — usually bringing a finished feature branch into <code>main</code>. Git weaves the two histories together. If both branches changed the same lines, Git cannot decide and marks a <i>merge conflict</i> for you to fix by hand.</p>`},
+{q:"What is the difference between Git and GitHub?",a:`<p><b>Git</b> is the version control tool that runs on your computer — it tracks changes locally with no internet needed. <b>GitHub</b> is a website that hosts Git repositories online so teams can share code, review changes (pull requests), and back up their work. GitLab and Bitbucket do the same job as GitHub.</p>`}
+],
+openshift:[
+{q:"What is OpenShift, in simple terms?",a:`<p>OpenShift is Red Hat's platform for running containerised applications. It takes Kubernetes and adds the extra tools a company needs — a web console, built-in image storage, easier ways to publish apps, and stronger default security — all supported as one product.</p>`},
+{q:"How is OpenShift related to Kubernetes?",a:`<p>OpenShift is built <i>on top of</i> Kubernetes — Kubernetes is inside it doing the container scheduling. OpenShift does not replace Kubernetes; it wraps it with extra features and opinionated defaults. Anything you know about pods and services in Kubernetes applies in OpenShift.</p>`},
+{q:"What is a project in OpenShift?",a:`<p>A project is a workspace that groups one application's resources together and controls who can see and change them. Underneath, a project is a Kubernetes namespace with extra display and access settings. Teams typically get one project per application or environment.</p>`},
+{q:"What is the oc command, and how is it similar to kubectl?",a:`<p><code>oc</code> is OpenShift's command-line tool. It works just like <code>kubectl</code> — in fact most <code>kubectl</code> commands work the same in <code>oc</code>, such as <code>oc get pods</code> — and it adds OpenShift-only commands for projects, builds and routes. If you know one, you mostly know the other.</p>`},
+{q:"What is the OpenShift web console used for?",a:`<p>The web console is OpenShift's browser interface. Developers use it to deploy apps, watch pods start, read logs and see routes; administrators use it to manage users, projects and cluster health. It has two views: a simpler Developer view and a full Administrator view.</p>`},
+{q:"What is a route, in simple terms?",a:`<p>A route gives an application a public web address (URL) so people outside the cluster can reach it. Inside the cluster, apps talk to a Service; a route takes that Service and publishes it on a hostname, with options for HTTPS. It is OpenShift's original way of doing what Kubernetes Ingress does.</p>`},
+{q:"What is a pod in OpenShift, and how do you check on one?",a:`<p>A pod is the same as in Kubernetes: the smallest running unit, holding one or more containers. Check on pods with:</p><pre><code>oc get pods
+oc describe pod &lt;name&gt;
+oc logs &lt;name&gt;</code></pre><p><code>describe</code> shows events that explain a failure; <code>logs</code> shows the app's own output.</p>`},
+{q:"What is Source-to-Image, in simple terms?",a:`<p>Source-to-Image (S2I) builds a container image directly from your source code — no Dockerfile needed. You point it at a code repository and a language (like Python or Node.js), and it picks a builder image, adds your code, and produces a ready-to-run image automatically.</p>`}
+],
+jenkins:[
+{q:"What is Jenkins, and what do CI and CD mean?",a:`<p>Jenkins is a free automation server that builds and tests software automatically. <b>CI (Continuous Integration)</b> means every code change is built and tested straight away. <b>CD (Continuous Delivery/Deployment)</b> means the tested software is then packaged and delivered — or deployed — automatically. Jenkins runs these steps for you.</p>`},
+{q:"What is a Jenkins job?",a:`<p>A job is one configured task in Jenkins — for example "build this app and run its tests". You set what code it uses and which steps to run, and Jenkins keeps its history: every run is a numbered <i>build</i> that you can inspect later.</p>`},
+{q:"What is a pipeline, in simple terms?",a:`<p>A pipeline is a job made of stages that run in order — typically build, then test, then deploy. If a stage fails, the pipeline stops and shows you exactly where. Pipelines are usually defined in code so the whole flow is visible in one place, instead of chaining separate jobs by hand.</p>`},
+{q:"What is a Jenkins agent (node)?",a:`<p>An agent is a machine that does the actual build work — compiling and testing. The main Jenkins server (the controller) organises and schedules jobs but should not run builds itself. Agents can be permanent servers or temporary containers created for one build and deleted afterwards.</p>`},
+{q:"How do you start a build manually, and how can a build start automatically when code changes?",a:`<p>Manually: open the job and click <b>Build Now</b>. Automatically: Jenkins can watch your code repository — most teams use a <i>webhook</i>, where GitHub or GitLab notifies Jenkins the moment code is pushed, and Jenkins starts a build right away. Jenkins can also poll the repo on a schedule as a fallback.</p>`},
+{q:"What is a Jenkinsfile, in simple terms?",a:`<p>A Jenkinsfile is a text file that describes a pipeline — its stages and steps — stored inside the project's code repository. Because it lives with the code, the build process is versioned and reviewed just like the application. When Jenkins sees a Jenkinsfile, it knows how to build that project.</p>`},
+{q:"Where do you see whether a build passed or failed, and its console output?",a:`<p>On the job page, the <b>build history</b> lists every build — blue/green means success, red means failure. Click a build and choose <b>Console Output</b> to see the full text log of every step, which is where you find the exact error when a build fails.</p>`},
+{q:"What are Jenkins plugins?",a:`<p>Plugins are add-ons that extend what Jenkins can do — connecting to Git, Docker, Kubernetes, Slack, cloud providers, and hundreds of other tools. Jenkins itself is small; most of its power comes from plugins, which admins install and update from the Plugin Manager.</p>`}
+],
+azure:[
+{q:"What is Microsoft Azure, in simple terms?",a:`<p>Azure is Microsoft's cloud platform: instead of buying and running your own servers, you rent computing power, storage and ready-made services over the internet and pay for what you use. You manage everything through a web portal, a command-line tool, or code.</p>`},
+{q:"What is a resource group?",a:`<p>A resource group is a folder-like container that holds related Azure resources — for example the virtual machine, disk and network for one application. Grouping them lets you manage, secure, monitor and delete them together. Every Azure resource must belong to exactly one resource group.</p>`},
+{q:"What is an Azure virtual machine?",a:`<p>An Azure virtual machine (VM) is a computer running in Microsoft's datacentres instead of on hardware you own. You choose its size (CPU and memory), its operating system (Windows or Linux), and its disks — and you can start, stop, resize or delete it at any time.</p>`},
+{q:"What are the main kinds of Azure Storage?",a:`<p>Azure Storage has four main services: <b>Blob</b> storage for files and objects, <b>File</b> shares for shared folders, <b>Queue</b> storage for passing messages between apps, and <b>Table</b> storage for simple key-value data. (Managed disks for VMs are managed alongside them.) Blob is the one beginners meet first.</p>`},
+{q:"What is a virtual network (VNet)?",a:`<p>A virtual network is your own private network inside Azure. Your virtual machines and services sit inside it, get private IP addresses, and can talk to each other securely. You divide it into smaller ranges called subnets, and you control traffic in and out with security rules.</p>`},
+{q:"What is Microsoft Entra ID (formerly Azure Active Directory), in simple terms?",a:`<p>Microsoft Entra ID is Azure's sign-in and identity service. It holds user accounts and groups, checks passwords (and multi-factor prompts) when people log in, and controls what each person or app is allowed to do in Azure. It was previously called Azure Active Directory, or Azure AD.</p>`},
+{q:"What are the Azure portal and the Azure CLI used for?",a:`<p>The <b>Azure portal</b> is the website (portal.azure.com) where you click through screens to create and manage resources — best for learning and one-off tasks. The <b>Azure CLI</b> is the command-line tool (<code>az</code> commands) that does the same things from a terminal — best for repeating tasks and scripts.</p>`},
+{q:"What is an Azure region?",a:`<p>A region is a geographic location — such as East US or West Europe — where Microsoft has datacentres and you can run your resources. You choose a region close to your users for speed, and sometimes a second region for backup. Not every service is available in every region.</p>`}
+],
+aws:[
+{q:"What is AWS, in simple terms?",a:`<p>AWS (Amazon Web Services) is Amazon's cloud platform: you rent servers, storage, databases and many other services over the internet instead of buying hardware. You pay for what you use, can start in minutes, and can scale up or shut everything down at any time.</p>`},
+{q:"What is EC2?",a:`<p>EC2 (Elastic Compute Cloud) is AWS's virtual server service. An EC2 <i>instance</i> is a virtual machine you rent — you pick its size, operating system and storage, then log in and use it like a normal server. It is the most basic and best-known AWS service.</p>`},
+{q:"What is S3?",a:`<p>S3 (Simple Storage Service) stores files — called <i>objects</i> — in containers called <i>buckets</i>. It is used for backups, images, static websites, logs and data lakes. S3 is not a hard drive for a server; you upload and download objects over the internet or the AWS API, and AWS keeps multiple copies so data is very durable.</p>`},
+{q:"What is IAM, in simple terms?",a:`<p>IAM (Identity and Access Management) controls who can do what in your AWS account. You create users, groups and roles, and attach <i>policies</i> — lists of allowed actions. The golden rule is <b>least privilege</b>: give each person or app only the permissions it actually needs, and nothing more.</p>`},
+{q:"What is a VPC, in simple terms?",a:`<p>A VPC (Virtual Private Cloud) is your own private network inside AWS. Your servers live inside it with private IP addresses, divided into subnets. You decide what can reach the internet and what stays private, using route tables, security groups and network rules.</p>`},
+{q:"What are AWS regions and availability zones?",a:`<p>A <b>region</b> is a geographic area (for example, US East — Virginia) where AWS has datacentres. Each region contains several <b>availability zones (AZs)</b> — separate datacentres in that area with their own power and networking. Running copies of your app in more than one AZ protects you if one datacentre fails.</p>`},
+{q:"What are the AWS Management Console and the AWS CLI used for?",a:`<p>The <b>Management Console</b> is the AWS website where you click through screens to create and manage services — best for learning and one-off changes. The <b>AWS CLI</b> is the command-line tool (<code>aws</code> commands) that does the same from a terminal — best for scripts and repeated work.</p>`},
+{q:"What is an AMI, and what is a security group?",a:`<p>An <b>AMI</b> (Amazon Machine Image) is a template for starting an EC2 instance — it contains the operating system and any pre-installed software. A <b>security group</b> is a virtual firewall attached to an instance that controls which traffic can reach it, for example "allow web traffic on port 80, allow SSH only from my office".</p>`}
+],
+gcp:[
+{q:"What is Google Cloud Platform, in simple terms?",a:`<p>Google Cloud Platform (GCP, now called Google Cloud) is Google's cloud platform: you rent computing, storage, databases and AI services over the internet instead of buying hardware. It runs on the same global infrastructure as Google Search and YouTube, and you pay for what you use.</p>`},
+{q:"What is a project in GCP?",a:`<p>A project is the main container for your work in Google Cloud. Every resource — every VM, bucket and database — belongs to exactly one project. Billing, permissions and enabled APIs are all organised per project, so teams often use separate projects for dev, test and production.</p>`},
+{q:"What is Compute Engine?",a:`<p>Compute Engine is GCP's virtual machine service. You create a VM, choose its size and operating system, and use it like a normal server that happens to live in a Google datacentre. It is the GCP equivalent of AWS EC2 or an Azure VM.</p>`},
+{q:"What is Cloud Storage?",a:`<p>Cloud Storage is GCP's file storage service. You store files — called <i>objects</i> — in containers called <i>buckets</i>, and retrieve them over the internet or API. It is used for backups, images, logs and static websites, and it is the GCP equivalent of Amazon S3.</p>`},
+{q:"What is IAM in GCP, in simple terms?",a:`<p>IAM (Identity and Access Management) controls who can do what on your Google Cloud resources. You give a person or service account a <i>role</i> — a bundle of permissions like "can view storage" — at the organisation, folder, project or resource level. Permissions granted higher up are inherited below.</p>`},
+{q:"What is a VPC network in GCP, in simple terms?",a:`<p>A VPC network is your private network inside Google Cloud where your VMs and services communicate with private IP addresses. One difference from other clouds: a GCP VPC is <i>global</i> — it can span all regions — while its subnets each belong to one region. Firewall rules on the VPC control what traffic is allowed.</p>`},
+{q:"What are the Google Cloud Console and the gcloud CLI used for?",a:`<p>The <b>Cloud Console</b> is the Google Cloud website where you click through screens to create and manage resources — best for learning and one-off tasks. The <b>gcloud CLI</b> is the command-line tool (<code>gcloud</code> commands) that does the same from a terminal — best for scripts and repeated work.</p>`},
+{q:"What is GKE, in simple terms?",a:`<p>GKE (Google Kubernetes Engine) is Google's managed Kubernetes service. Google runs the Kubernetes control plane for you, and you run your containerised applications on it without maintaining the cluster machinery yourself. Its <i>Autopilot</i> mode goes further and manages the worker nodes too.</p>`}
+],
+python:[
+{q:"What is Python, and why is it popular for automation?",a:`<p>Python is a programming language known for clear, readable code that looks almost like plain English. It is popular for automation because it has a huge built-in library, works on Linux, Windows and Mac, and lets you write a useful script — renaming files, checking servers, parsing logs — in a few lines.</p>`},
+{q:"How do you print output with print() and read input with input()?",a:`<pre><code>print("Hello, world!")
+name = input("What is your name? ")
+print("Hello,", name)</code></pre><p><code>print()</code> shows text on the screen. <code>input()</code> pauses, waits for the user to type something, and returns it as a string.</p>`},
+{q:"What are variables, and what are the basic data types (string, integer, float, boolean)?",a:`<p>A variable is a name that stores a value: <code>age = 30</code>. The basic types are: <b>string</b> — text, like <code>"hello"</code>; <b>integer</b> — whole numbers, like <code>30</code>; <b>float</b> — decimal numbers, like <code>3.14</code>; and <b>boolean</b> — <code>True</code> or <code>False</code>. Python works out the type from the value — you do not declare it.</p>`},
+{q:"How do if, elif, and else work, with comparison operators?",a:`<p><code>if</code> runs code only when a condition is true; <code>elif</code> checks another condition; <code>else</code> runs if none matched. Indentation is what groups the code:</p><pre><code>if score >= 90:
+    print("A")
+elif score >= 60:
+    print("Pass")
+else:
+    print("Fail")</code></pre><p>Common comparisons: <code>==</code> equal, <code>!=</code> not equal, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>. Note <code>==</code> compares, while single <code>=</code> assigns.</p>`},
+{q:"How do for loops and while loops work?",a:`<p>A <code>for</code> loop repeats once for each item in a sequence — best when you know what you are looping over. A <code>while</code> loop repeats as long as a condition stays true:</p><pre><code>for name in ["Ana", "Ben", "Cid"]:
+    print(name)
+
+count = 0
+while count &lt; 3:
+    print(count)
+    count += 1</code></pre>`},
+{q:"What is a function, and how do you define one with def and return?",a:`<p>A function is a named, reusable block of code. You define it with <code>def</code>, give it inputs (parameters), and send a result back with <code>return</code>:</p><pre><code>def greet(name):
+    return "Hello, " + name
+
+message = greet("Keith")  # message is "Hello, Keith"</code></pre><p>Functions keep scripts organised — write the logic once, call it many times.</p>`},
+{q:"How do you work with lists and dictionaries — creating them and reading values?",a:`<p>A <b>list</b> is an ordered collection, read by position (starting at 0). A <b>dictionary</b> stores key–value pairs, read by key:</p><pre><code>fruits = ["apple", "banana", "cherry"]
+print(fruits[0])        # apple
+fruits.append("date")   # add an item
+
+user = {"name": "Keith", "role": "admin"}
+print(user["name"])     # Keith</code></pre>`},
+{q:"How do you open and read a text file in Python?",a:`<p>Use <code>with open(...)</code> so the file is closed automatically when you finish — even if an error occurs:</p><pre><code>with open("notes.txt") as f:
+    text = f.read()          # whole file as one string
+
+with open("notes.txt") as f:
+    for line in f:           # or read line by line
+        print(line.strip())</code></pre><p>Reading line by line is the safe choice for large files like logs.</p>`}
+]
+};
+SUBJECTS.forEach(function(s){ s.entryQuestions = ENTRY_QUESTIONS[s.id] || []; });
+</script>
+
+<script>
 const grid = document.getElementById('subjectGrid');
 const sideNav = document.getElementById('sideNav');
 const mobileSelect = document.getElementById('mobileSelect');
@@ -674,20 +915,22 @@ const subjectContent = document.getElementById('subjectContent');
 let revealed = new Set();
 
 function esc(s){return s.replace(/"/g,'&quot;')}
+function totalQs(s){ return (s.entryQuestions?s.entryQuestions.length:0) + s.questions.length; }
 function renderGrid(filter=''){
   const f = filter.toLowerCase().trim();
   grid.innerHTML = SUBJECTS.filter(s=>{
     if(!f) return true;
-    return (s.title+' '+s.desc+' '+s.questions.map(q=>q.q).join(' ')).toLowerCase().includes(f);
+    const allQ = s.questions.map(q=>q.q).join(' ') + ' ' + (s.entryQuestions||[]).map(q=>q.q).join(' ');
+    return (s.title+' '+s.desc+' '+allQ).toLowerCase().includes(f);
   }).map(s=>`
     <a class="card" href="#${s.id}">
-      <div class="card-top"><span>${s.num}</span><span>${s.questions.length} questions</span></div>
-      <h3>${s.title}</h3><p>${s.desc}</p><div class="card-arrow">→</div>
+      <div class="card-top"><span>${s.num}</span><span>${totalQs(s)} questions</span></div>
+      <h3>${s.title}</h3><p>${s.desc}</p><p style="margin-top:10px;font-size:.82rem;color:var(--teal);font-weight:600">${(s.entryQuestions||[]).length} entry-level · ${s.questions.length} senior-level</p><div class="card-arrow">→</div>
     </a>`).join('') || `<p style="color:var(--muted)">No subjects match “${esc(filter)}”. Try “SELinux”, “Terraform” or “Python”.</p>`;
 }
 function renderSide(activeId){
-  sideNav.innerHTML = SUBJECTS.map(s=>`<a class="side-link ${s.id===activeId?'active':''}" href="#${s.id}"><span class="num">${s.num}</span><span>${s.title}</span><span class="count">${s.questions.length}</span></a>`).join('');
-  mobileSelect.innerHTML = SUBJECTS.map(s=>`<option value="${s.id}" ${s.id===activeId?'selected':''}>${s.num} — ${s.title} (${s.questions.length} Qs)</option>`).join('');
+  sideNav.innerHTML = SUBJECTS.map(s=>`<a class="side-link ${s.id===activeId?'active':''}" href="#${s.id}"><span class="num">${s.num}</span><span>${s.title}</span><span class="count">${totalQs(s)}</span></a>`).join('');
+  mobileSelect.innerHTML = SUBJECTS.map(s=>`<option value="${s.id}" ${s.id===activeId?'selected':''}>${s.num} — ${s.title} (${totalQs(s)} Qs)</option>`).join('');
 }
 mobileSelect.addEventListener('change', e=>{ location.hash = '#'+e.target.value; });
 
@@ -706,17 +949,25 @@ function renderSubject(id){
   renderSide(id);
   const prev = SUBJECTS[idx-1], next = SUBJECTS[idx+1];
   subjectContent.innerHTML = `
-    <div class="crumb">Interview Prep &nbsp;/&nbsp; ${s.num} &nbsp;/&nbsp; ${s.questions.length} questions</div>
+    <div class="crumb">Interview Prep &nbsp;/&nbsp; ${s.num} &nbsp;/&nbsp; ${totalQs(s)} questions</div>
     <h1>${s.title}</h1>
     <p class="intro">${s.intro}</p>
-    <div class="meta-row"><span class="pill">Senior level</span><span class="pill">${s.questions.length} Q&amp;As</span><span class="pill">Answers hidden — self-test first</span><span class="pill">${s.desc}</span></div>
+    <div class="meta-row"><span class="pill">Entry + Senior level</span><span class="pill">${totalQs(s)} Q&amp;As — ${(s.entryQuestions||[]).length} entry · ${s.questions.length} senior</span><span class="pill">Answers hidden — self-test first</span><span class="pill">${s.desc}</span></div>
     <div class="toolbar"><p><b style="color:var(--text)">Self-test mode</b> — answer aloud, then reveal.</p><div class="toolbar-actions"><button class="small-btn primary" id="expandAll">Expand all</button><button class="small-btn" id="collapseAll">Collapse all</button></div></div>
     <div id="qaList">
+    <div class="level-head"><h2>Entry-Level Questions <span class="level-tag entry">Entry level</span></h2><p>Fundamentals a junior candidate should nail — plain answers, basic commands, no tricks. Start here.</p></div>
+    ${(s.entryQuestions||[]).map((item,i)=>`
+      <article class="qa" data-idx="e-${i}">
+        <div class="qa-head"><span class="qnum entry">${i+1}</span><h3>${item.q}</h3></div>
+        <button class="reveal-btn" data-toggle="e-${i}" aria-expanded="false">Show answer ↓</button>
+        <div class="answer hidden" id="ans-e-${i}">${item.a}</div>
+      </article>`).join('')}
+    <div class="level-head"><h2>Senior-Level Questions <span class="level-tag senior">Senior level</span></h2><p>Architecture, troubleshooting and trade-offs — the depth expected for senior Linux / SRE / platform roles.</p></div>
     ${s.questions.map((item,i)=>`
-      <article class="qa" data-idx="${i}">
+      <article class="qa" data-idx="s-${i}">
         <div class="qa-head"><span class="qnum">${i+1}</span><h3>${item.q}</h3></div>
-        <button class="reveal-btn" data-toggle="${i}" aria-expanded="false">Show answer ↓</button>
-        <div class="answer hidden" id="ans-${i}">${item.a}</div>
+        <button class="reveal-btn" data-toggle="s-${i}" aria-expanded="false">Show answer ↓</button>
+        <div class="answer hidden" id="ans-s-${i}">${item.a}</div>
       </article>`).join('')}
     </div>
     <section class="refs"><h2>References &amp; further learning</h2><p class="sub">Websites and videos for ${s.title} — official docs first, then the channels worth your time.</p>
@@ -728,7 +979,8 @@ function renderSubject(id){
     </div>
     <p style="margin-top:22px"><a href="#/">← All subjects</a> &nbsp;·&nbsp; Styled after <a href="https://docs.techdox.nz" target="_blank" rel="noopener">docs.techdox.nz</a> — clean docs layout, sidebar navigation, card library.</p>
   `;
-  updateProgress(s.questions.length);
+  var total = totalQs(s);
+  updateProgress(total);
   window.scrollTo({top:0});
   subjectContent.querySelectorAll('[data-toggle]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
@@ -737,19 +989,19 @@ function renderSubject(id){
       const open = !ans.classList.contains('hidden');
       if(open){ ans.classList.add('hidden'); btn.textContent='Show answer ↓'; btn.setAttribute('aria-expanded','false'); revealed.delete(i); }
       else { ans.classList.remove('hidden'); btn.textContent='Hide answer ↑'; btn.setAttribute('aria-expanded','true'); revealed.add(i); }
-      updateProgress(s.questions.length);
+      updateProgress(total);
     });
   });
   document.getElementById('expandAll').addEventListener('click', ()=>{
-    s.questions.forEach((_,i)=>{ document.getElementById('ans-'+i).classList.remove('hidden'); revealed.add(String(i)); });
-    subjectContent.querySelectorAll('[data-toggle]').forEach(b=>{b.textContent='Hide answer ↑'; b.setAttribute('aria-expanded','true')});
-    updateProgress(s.questions.length);
+    subjectContent.querySelectorAll('.answer').forEach(function(el){ el.classList.remove('hidden'); });
+    subjectContent.querySelectorAll('[data-toggle]').forEach(function(b){ revealed.add(b.getAttribute('data-toggle')); b.textContent='Hide answer ↑'; b.setAttribute('aria-expanded','true'); });
+    updateProgress(total);
   });
   document.getElementById('collapseAll').addEventListener('click', ()=>{
-    s.questions.forEach((_,i)=>{ document.getElementById('ans-'+i).classList.add('hidden'); });
+    subjectContent.querySelectorAll('.answer').forEach(function(el){ el.classList.add('hidden'); });
     revealed.clear();
-    subjectContent.querySelectorAll('[data-toggle]').forEach(b=>{b.textContent='Show answer ↓'; b.setAttribute('aria-expanded','false')});
-    updateProgress(s.questions.length);
+    subjectContent.querySelectorAll('[data-toggle]').forEach(function(b){ b.textContent='Show answer ↓'; b.setAttribute('aria-expanded','false'); });
+    updateProgress(total);
   });
 }
 function showHome(){ homeView.classList.remove('hidden'); subjectView.classList.add('hidden'); window.scrollTo({top:0}); }
